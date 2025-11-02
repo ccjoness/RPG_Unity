@@ -22,14 +22,19 @@ public class Object_ItemPickup : MonoBehaviour
       
       sr = GetComponent<SpriteRenderer>();
       sr.sprite = itemData.itemIcon;
-      gameObject.name = itemData.itemName;
+      gameObject.name = $"Object_ItemPickup - {itemData.itemName}";
    }
 
    private void OnTriggerEnter2D(Collider2D collision)
    {
       inventory = collision.GetComponent<Inventory_Base>();
+      
+      if (inventory == null)
+         return;
+      
+      bool canAddItem = inventory.CanAddItem() || inventory.FindStackable(itemToAdd) != null;
 
-      if (inventory != null && inventory.CanAddItem())
+      if (canAddItem)
       {
          inventory.AddItem(itemToAdd);
          Destroy(gameObject);

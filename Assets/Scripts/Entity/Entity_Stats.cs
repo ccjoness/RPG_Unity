@@ -80,29 +80,23 @@ public class Entity_Stats : MonoBehaviour
     
     public float GetPhysicalDamage(out bool isCrit, float scaleFactor = 1)
     {
-        float baseDamage = offense.damage.GetValue();
-        float bonusDamage = major.strength.GetValue();
-        float totalBaseDamage = baseDamage + bonusDamage;
-
-        float baseCritChance = offense.critChance.GetValue();
-        float bonusCritChance = major.agility.GetValue() * .3f;
-        float critChance = baseCritChance + bonusCritChance;
-
-        float baseCritPower = offense.critPower.GetValue();
-        float bonusCritPower = major.strength.GetValue() * .5f;
-        float critPower = (baseCritPower + bonusCritPower) / 100;
+        float baseDamage = GetBaseDamage();
+        float critChance = GetCritChance();
+        float critPower = GetCritPower() / 100;
         
         isCrit = Random.Range(0, 100) < critChance;
-        float finalDamage = isCrit ? totalBaseDamage * critPower : totalBaseDamage;
+        float finalDamage = isCrit ? baseDamage * critPower : baseDamage;
 
         return finalDamage * scaleFactor;
     }
+    
+    public float GetBaseDamage() => offense.damage.GetValue() * major.strength.GetValue();
+    public float GetCritChance() => offense.critChance.GetValue() + (major.agility.GetValue() * .3f);
+    public float GetCritPower() => offense.critPower.GetValue() + (major.strength.GetValue() * .5f);
 
     public float GetArmorMitigation(float armorReduction)
     {
-        float baseArmor = defense.armor.GetValue();
-        float bonusArmor = major.vitality.GetValue(); // Bonus armor from vitality: +1
-        float totalArmor = baseArmor + bonusArmor;
+        float totalArmor = GetBaseArmor();
         
         float reductionMultiplier = Mathf.Clamp01(1 - armorReduction);
         float effectiveArmor = totalArmor * reductionMultiplier;
@@ -114,6 +108,8 @@ public class Entity_Stats : MonoBehaviour
         
         return finalMitigation;
     }
+
+    public float GetBaseArmor() => defense.armor.GetValue() + major.vitality.GetValue();
 
     public float GetArmorReduction()
     {
