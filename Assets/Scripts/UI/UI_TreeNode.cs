@@ -21,7 +21,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private string skillName;
     [SerializeField] private Image skillIcon;
     [SerializeField] private int skillCost;
-    [SerializeField] private string lockedColorHex = "#969696";
+    [SerializeField] private string lockedColorHex = "#9F9797";
     private Color lastColor;
 
     private void Awake()
@@ -44,15 +44,17 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (isUnlocked == false || skillData.unlockedByDefault)
             return;
-        
+
         isUnlocked = false;
         isLocked = false;
         UpdateIconColor(GetColorByHex(lockedColorHex));
-        
+
         skillTree.AddSkillPoints(skillData.cost);
         connectHandler.UnlockConnectionImage(false);
-    }
 
+        // skill manager and reset skill
+    }
+    
     private void Unlock()
     {
         isUnlocked = true;
@@ -61,7 +63,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         skillTree.RemoveSkillPoints(skillData.cost);
         connectHandler.UnlockConnectionImage(true);
-        
+
         skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData.upgradeData);
     }
 
@@ -96,7 +98,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             node.LockChildNodes();
         }
     }
-    
+
     public void LockChildNodes()
     {
         isLocked = true;
@@ -104,7 +106,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         foreach (var node in connectHandler.GetChildNodes())
             node.LockChildNodes();
     }
-    
+
     private void UpdateIconColor(Color color)
     {
         if (skillIcon == null)
@@ -125,35 +127,35 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         ui.skillToolTip.ShowToolTip(true, rect, this);
-        
+
         if (isUnlocked || isLocked)
             return;
         
         ToggleNodeHighlight(true);
-
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         ui.skillToolTip.ShowToolTip(false, rect);
-        
+
         if (isUnlocked || isLocked)
             return;
-        
+
         ToggleNodeHighlight(false);
     }
 
     private void ToggleNodeHighlight(bool highlight)
     {
-        Color highlightColor = Color.white * .9f;
-        highlightColor.a = 1;
+        Color highlightColor = Color.white * .9f; highlightColor.a = 1;
         Color colorToApply = highlight ? highlightColor : lastColor;
+
         UpdateIconColor(colorToApply);
     }
 
     private Color GetColorByHex(string hexNumber)
     {
         ColorUtility.TryParseHtmlString(hexNumber, out Color color);
+
         return color;
     }
 
@@ -161,7 +163,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (isLocked)
             UpdateIconColor(GetColorByHex(lockedColorHex));
-        
+
         if (isUnlocked)
             UpdateIconColor(Color.white);
     }

@@ -12,11 +12,13 @@ public class UI_SkillToolTip : UI_ToolTip
     [SerializeField] private TextMeshProUGUI skillDescription;
     [SerializeField] private TextMeshProUGUI skillCooldown;
     [SerializeField] private TextMeshProUGUI skillRequirements;
-    [Space] [SerializeField] private string metConditionHex;
+
+    [Space]
+    [SerializeField] private string metConditionHex;
     [SerializeField] private string notMetConditionHex;
     [SerializeField] private string importantInfoHex;
     [SerializeField] private Color exampleColor;
-    [SerializeField] private string lockedSkillText = "You've taken another path. This Skill is now locked.";
+    [SerializeField] private string lockedSkillText = "You've taken a diffrent path - this skill is now locked.";
 
     private Coroutine textEffectCo;
 
@@ -35,7 +37,8 @@ public class UI_SkillToolTip : UI_ToolTip
     public void ShowToolTip(bool show, RectTransform targetRect, UI_TreeNode node)
     {
         base.ShowToolTip(show, targetRect);
-        if (!show)
+
+        if (show == false)
             return;
 
         skillName.text = node.skillData.displayName;
@@ -75,14 +78,20 @@ public class UI_SkillToolTip : UI_ToolTip
         sb.AppendLine("Requirements:");
 
         string costColor = skillTree.EnoughSkillPoints(skillCost) ? metConditionHex : notMetConditionHex;
-        sb.AppendLine(GetColoredText(costColor, $"- {skillCost} skill point(s)"));
+        string costText = $"- {skillCost} skill point(s)";
+        string finalCostText = GetColoredText(costColor, costText);
+
+        sb.AppendLine(finalCostText);
 
         foreach (var node in neededNodes)
         {
             if (node == null) continue;
-            
+
             string nodeColor = node.isUnlocked ? metConditionHex : notMetConditionHex;
-            sb.AppendLine(GetColoredText(nodeColor, $"- {node.skillData.displayName}"));
+            string nodeText = $"- {node.skillData.displayName}";
+            string finalNodeText = GetColoredText(nodeColor, nodeText);
+
+            sb.AppendLine(finalNodeText);
         }
 
         if (conflictNodes.Length <= 0)
@@ -95,7 +104,9 @@ public class UI_SkillToolTip : UI_ToolTip
         {
             if (node == null) continue;
 
-            sb.AppendLine(GetColoredText(importantInfoHex, $"- {node.skillData.displayName}"));
+            string nodeText = $"- {node.skillData.displayName}";
+            string finalNodeText = GetColoredText(importantInfoHex, nodeText);
+            sb.AppendLine(finalNodeText);
         }
 
         return sb.ToString();

@@ -20,12 +20,15 @@ public class UI_ItemToolTip : UI_ToolTip
     
     public string GetItemInfo(Inventory_Item item)
     {
+
         if (item.itemData.itemType == ItemType.Material)
             return "Used for crafting.";
 
+
         if (item.itemData.itemType == ItemType.Consumable)
             return item.itemData.itemEffect.effectDescription;
-        
+
+
         StringBuilder sb = new StringBuilder();
 
         sb.AppendLine("");
@@ -36,6 +39,17 @@ public class UI_ItemToolTip : UI_ToolTip
             string modValue = IsPercentageStat(mod.statType) ? $"{mod.value.ToString(CultureInfo.CurrentCulture)}%" : $"{mod.value.ToString(CultureInfo.CurrentCulture)}";
             sb.AppendLine($"+ {modValue} {modType}");
         }
+
+        if (item.itemEffect != null)
+        {
+            sb.AppendLine("");
+            sb.AppendLine("Unique Effect:");
+            sb.AppendLine(item.itemEffect.effectDescription);
+        }
+
+        sb.AppendLine("");
+        sb.AppendLine("");
+
         return sb.ToString();
     }
 

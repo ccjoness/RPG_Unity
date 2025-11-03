@@ -58,7 +58,7 @@ public class Entity_StatusHandler : MonoBehaviour
         StartCoroutine(ChillEffectCo(reduceDuration, slowMultiplier));
     }
 
-    private void ApplyShockEffect(float duration, float damage, float charge)
+    public void ApplyShockEffect(float duration, float damage, float charge)
     {
         float shockResistance = entityStats.GetElementalResistance(ElementType.Lightning);
         float finalCharge = charge * (1 - shockResistance);

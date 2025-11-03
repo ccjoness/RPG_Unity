@@ -39,7 +39,7 @@ public class UI_TreeConnectHandler : MonoBehaviour
 
         return childrenToReturn.ToArray();
     }
-    
+
     public void UpdateConnections()
     {
         for (int i = 0; i < connectionDetails.Length; i++)
@@ -76,14 +76,13 @@ public class UI_TreeConnectHandler : MonoBehaviour
     {
         if (connectionImage == null)
             return;
-        
+
         connectionImage.color = unlocked ? Color.white : originalColor;
     }
-    
-    public void SetConnectionImage(Image image) => connectionImage = image;
 
+    public void SetConnectionImage(Image image) => connectionImage = image;
     public void SetPosition(Vector2 position) => rect.anchoredPosition = position;
-    
+
     private void OnValidate()
     {
         if (connectionDetails.Length <= 0)
@@ -92,6 +91,7 @@ public class UI_TreeConnectHandler : MonoBehaviour
         if (connectionDetails.Length != connections.Length)
         {
             Debug.Log("Amount of details should be same as amount of connections. - " + gameObject.name);
+            return;
         }
 
         UpdateConnections();

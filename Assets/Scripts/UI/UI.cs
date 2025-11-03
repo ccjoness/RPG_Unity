@@ -25,6 +25,17 @@ public class UI : MonoBehaviour
         inventoryEnabled = inventoryUI.gameObject.activeSelf;
     }
 
+    public void ToggleSkillTreeUI()
+    {
+        skillTreeEnabled = !skillTreeEnabled;
+        
+        if (skillTreeEnabled && inventoryEnabled)
+            ToggleInventoryUI();
+        
+        skillTreeUI.gameObject.SetActive(skillTreeEnabled);
+        skillToolTip.ShowToolTip(false, null);
+    }
+
     public void ToggleInventoryUI()
     {
         inventoryEnabled = !inventoryEnabled;
@@ -35,16 +46,5 @@ public class UI : MonoBehaviour
         inventoryUI.gameObject.SetActive(inventoryEnabled);
         statToolTip.ShowToolTip(false, null);
         itemToolTip.ShowToolTip(false, null);
-    }
-
-    public void ToggleSkillTreeUI()
-    {
-        skillTreeEnabled = !skillTreeEnabled;
-        
-        if (skillTreeEnabled && inventoryEnabled)
-            ToggleInventoryUI();
-        
-        skillTreeUI.gameObject.SetActive(skillTreeEnabled);
-        skillToolTip.ShowToolTip(false, null);
     }
 }

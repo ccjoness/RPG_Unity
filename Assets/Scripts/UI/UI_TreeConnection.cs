@@ -16,17 +16,19 @@ public class UI_TreeConnection : MonoBehaviour
         rotationPoint.localRotation = Quaternion.Euler(0, 0, angle + offset);
         connectionLength.sizeDelta = new Vector2(finalLength, connectionLength.sizeDelta.y);
     }
+
     public Image GetConnectionImage() => connectionLength.GetComponent<Image>();
 
     public Vector2 GetConnectionPoint(RectTransform rect)
     {
         RectTransformUtility.ScreenPointToLocalPointInRectangle
-        (
-            rect.parent as RectTransform,
-            childNodeConnectionPoint.position,
-            null,
-            out var localPosition
-        );
+            (
+                rect.parent as RectTransform,
+                childNodeConnectionPoint.position,
+                null,
+                out var localPosition
+            );
+
         return localPosition;
     }
 

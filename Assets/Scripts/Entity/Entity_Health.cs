@@ -1,8 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Entity_Health : MonoBehaviour, IDamageable
 {
+    public event Action OnTakingDamage;
+    
     private Slider healthBar;
     private Entity entity;
     private Entity_VFX entityVfx;
@@ -69,7 +73,8 @@ public class Entity_Health : MonoBehaviour, IDamageable
         ReduceHealth(physicalDamageTaken + elementalDamageTaken);
 
         lastDamageTaken = physicalDamageTaken + elementalDamageTaken;
-
+        
+        OnTakingDamage?.Invoke();
         return true;
     }
 

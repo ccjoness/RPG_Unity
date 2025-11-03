@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,6 +17,13 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         gameObject.name = $"UI_Stat - {GetStatNameByType(statSlotType)}";
         statName.text = GetStatNameByType(statSlotType);
     }
+
+    private void Awake()
+    {
+        ui = GetComponentInParent<UI>();
+        rect = GetComponent<RectTransform>();
+        playerStats = FindFirstObjectByType<Player_Stats>();
+    }
     
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -27,13 +33,6 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData eventData)
     {
         ui.statToolTip.ShowToolTip(false, null);
-    }
-
-    private void Awake()
-    {
-        ui = GetComponentInParent<UI>();
-        rect = GetComponent<RectTransform>();
-        playerStats = FindFirstObjectByType<Player_Stats>();
     }
 
     public void UpdateStatValue()
@@ -80,7 +79,7 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             case StatType.AttackSpeed:
                 value = playerStats.offense.attackSpeed.GetValue() * 100;
                 break;
-            
+
             // Defense stats
             case StatType.MaxHealth:
                 value = playerStats.GetMaxHealth();
@@ -108,7 +107,7 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             case StatType.ElementalDamage:
                 value = playerStats.GetElementalDamage(out ElementType element, 1);
                 break;
-            
+
             // Elemental resistance stats
             case StatType.IceResistance:
                 value = playerStats.GetElementalResistance(ElementType.Ice) * 100;

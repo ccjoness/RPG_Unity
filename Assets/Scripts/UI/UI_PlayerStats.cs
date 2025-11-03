@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class UI_PlayerStats : MonoBehaviour
@@ -9,6 +8,7 @@ public class UI_PlayerStats : MonoBehaviour
     private void Awake()
     {
         uiStatSlots = GetComponentsInChildren<UI_StatSlot>();
+
         inventory = FindFirstObjectByType<Inventory_Player>();
         inventory.OnInventoryChange += UpdateStatsUI;
     }
@@ -21,8 +21,6 @@ public class UI_PlayerStats : MonoBehaviour
     private void UpdateStatsUI()
     {
         foreach (var statSlot in uiStatSlots)
-        {
             statSlot.UpdateStatValue();
-        }
     }
 }
