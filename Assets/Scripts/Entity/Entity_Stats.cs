@@ -9,6 +9,11 @@ public class Entity_Stats : MonoBehaviour
     public Stat_DefenseGroup defense;
     public Stat_MajorGroup major;
 
+    protected virtual void Awake()
+    {
+
+    }
+
     public AttackData GetAttackData(DamageScaleData scaleData)
     {
         return new AttackData(this, scaleData);
@@ -55,7 +60,7 @@ public class Entity_Stats : MonoBehaviour
     public float GetElementalResistance(ElementType element)
     {
         float baseResistance = 0;
-        float bonusResistance = major.intelligence.GetValue() * 0.5f;
+        float bonusResistance = major.intelligence.GetValue() * .5f; // Bonus resistance from intelligence: +0.5% per INT
 
         switch (element)
         {
@@ -71,7 +76,7 @@ public class Entity_Stats : MonoBehaviour
             case ElementType.None:
                 break;
         }
-        
+
         float resistance = baseResistance + bonusResistance;
         float resistanceCap = 75f; //
         float finalResistance = Mathf.Clamp(resistance, 0, resistanceCap) / 100;
@@ -82,17 +87,21 @@ public class Entity_Stats : MonoBehaviour
     {
         float baseDamage = GetBaseDamage();
         float critChance = GetCritChance();
-        float critPower = GetCritPower() / 100;
-        
+        float critPower = GetCritPower() / 100; // Total crit power as multiplier ( e.g 150 / 100 = 1.5f - multiplier)
+
         isCrit = Random.Range(0, 100) < critChance;
         float finalDamage = isCrit ? baseDamage * critPower : baseDamage;
 
         return finalDamage * scaleFactor;
     }
-    
-    public float GetBaseDamage() => offense.damage.GetValue() * major.strength.GetValue();
+
+    // Bonus damage from Strength: +1 per STR
+    public float GetBaseDamage() => offense.damage.GetValue() + major.strength.GetValue();
+    //  Bonus crit chance from Agility: +0.3% per AGI 
     public float GetCritChance() => offense.critChance.GetValue() + (major.agility.GetValue() * .3f);
+    // Bonus crit chance from Strength: +0.5% per STR 
     public float GetCritPower() => offense.critPower.GetValue() + (major.strength.GetValue() * .5f);
+
 
     public float GetArmorMitigation(float armorReduction)
     {
@@ -102,40 +111,42 @@ public class Entity_Stats : MonoBehaviour
         float effectiveArmor = totalArmor * reductionMultiplier;
         
         float mitigation = effectiveArmor / (effectiveArmor + 100);
-        float mitigationCap = .85f;
-        
+        float mitigationCap = .85f; // Max mitigation will be capped at 85%
+
         float finalMitigation = Mathf.Clamp(mitigation, 0, mitigationCap);
-        
+
         return finalMitigation;
     }
-
+    // Bonus armor from Vitality: +1 per VIT 
     public float GetBaseArmor() => defense.armor.GetValue() + major.vitality.GetValue();
 
     public float GetArmorReduction()
     {
+        // Total armor reduction as multiplier ( e.g 30 / 100 = 0.3f - multiplier)
         float finalReduction = offense.armorReduction.GetValue() / 100;
+
         return finalReduction;
     }
-    
+
     public float GetEvasion()
     {
         float baseEvasion = defense.evasion.GetValue();
-        float bonusEvasion = major.agility.GetValue()  * .5f;
-        
+        float bonusEvasion = major.agility.GetValue() * .5f; // Bonus evasion from Agility: +0.5% per AGI 
+
         float totalEvasion = baseEvasion + bonusEvasion;
-        float evasionCap = 85f;
-        
+        float evasionCap = 85f; // Max evasion will be capped at 85%
+
         float finalEvasion = Mathf.Clamp(totalEvasion, 0, evasionCap);
-        
+
         return finalEvasion;
     }
-    
+
     public float GetMaxHealth()
     {
         float baseMaxHealth = resources.maxHealth.GetValue();
         float bonusMaxHealth = major.vitality.GetValue() * 5;
-
         float finalMaxHealth = baseMaxHealth + bonusMaxHealth;
+
         return finalMaxHealth;
     }
 
@@ -198,7 +209,7 @@ public class Entity_Stats : MonoBehaviour
         offense.armorReduction.SetBaseValue(defaultStatSetup.armorReduction);
 
         offense.iceDamage.SetBaseValue(defaultStatSetup.iceDamage);
-        offense.fireDamage.SetBaseValue(defaultStatSetup.fireDamage);  
+        offense.fireDamage.SetBaseValue(defaultStatSetup.fireDamage);
         offense.lightningDamage.SetBaseValue(defaultStatSetup.lightningDamage);
 
         defense.armor.SetBaseValue(defaultStatSetup.armor);
