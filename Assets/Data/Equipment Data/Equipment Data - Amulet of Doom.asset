@@ -12,10 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a77b88ae4b2771241a27b009bcb4ab54, type: 3}
   m_Name: Equipment Data - Amulet of Doom
   m_EditorClassIdentifier: 
+  itemPrice: 10000
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 1
+  itemRarity: 235
+  dropChance: 10
+  maxDropChance: 10
+  craftRecipe: []
   itemName: Amulet of Doom
   itemIcon: {fileID: -487091095, guid: 7238e031a8059bf4480265e0787cebd6, type: 3}
   itemType: 3
   maxStackSize: 1
+  itemEffect: {fileID: 0}
   modifiers:
   - statType: 2
     value: 10

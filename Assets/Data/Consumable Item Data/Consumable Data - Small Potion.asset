@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15b3a7a65e7ccc4da89dd13ace22f57, type: 3}
   m_Name: Consumable Data - Small Potion
   m_EditorClassIdentifier: 
+  itemPrice: 16
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 5
+  itemRarity: 10
+  dropChance: 80
+  maxDropChance: 80
+  craftRecipe: []
   itemName: Small Potion
   itemIcon: {fileID: -128620128, guid: 7238e031a8059bf4480265e0787cebd6, type: 3}
   itemType: 4
-  maxStackSize: 5
+  maxStackSize: 20
   itemEffect: {fileID: 11400000, guid: 522762967f6aab94d869ff5b00f5644e, type: 2}

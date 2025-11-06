@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15b3a7a65e7ccc4da89dd13ace22f57, type: 3}
   m_Name: Consumable Data - Book of Knowledge
   m_EditorClassIdentifier: 
+  itemPrice: 3871
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 5
+  itemRarity: 887
+  dropChance: 7
+  maxDropChance: 7
+  craftRecipe: []
   itemName: Book of Knowledge
   itemIcon: {fileID: 491610317, guid: 7238e031a8059bf4480265e0787cebd6, type: 3}
   itemType: 4
-  maxStackSize: 20
+  maxStackSize: 5
   itemEffect: {fileID: 11400000, guid: 6eb311187fa90d94cbd9d4dd05a05376, type: 2}

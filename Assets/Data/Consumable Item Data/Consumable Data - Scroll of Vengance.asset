@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15b3a7a65e7ccc4da89dd13ace22f57, type: 3}
   m_Name: Consumable Data - Scroll of Vengance
   m_EditorClassIdentifier: 
+  itemPrice: 5784
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 5
+  itemRarity: 293
+  dropChance: 9
+  maxDropChance: 9
+  craftRecipe: []
   itemName: Scroll of Vengance
   itemIcon: {fileID: 386270629, guid: 7238e031a8059bf4480265e0787cebd6, type: 3}
   itemType: 4

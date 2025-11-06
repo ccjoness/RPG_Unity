@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15b3a7a65e7ccc4da89dd13ace22f57, type: 3}
   m_Name: Consumable Data - Knowledge Scroll
   m_EditorClassIdentifier: 
+  itemPrice: 6223
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 5
+  itemRarity: 212
+  dropChance: 15.6
+  maxDropChance: 15.6
+  craftRecipe: []
   itemName: Knowledge Scroll
   itemIcon: {fileID: -340298378, guid: 7238e031a8059bf4480265e0787cebd6, type: 3}
   itemType: 4
-  maxStackSize: 1
+  maxStackSize: 5
   itemEffect: {fileID: 11400000, guid: 4aee383eb8eedcc409f44ac7181a6f9e, type: 2}
