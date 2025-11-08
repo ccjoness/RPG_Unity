@@ -14,9 +14,10 @@ public class Entity_Health : MonoBehaviour, IDamageable
     private Entity_Stats entityStats;
     private Entity_DropManager dropManager;
 
+    private UI_MiniHealthBar healthBarUI;
+    private bool miniHealthBarActive;
     [SerializeField] protected float currentHealth;
     
-
     [Header("Health Regeneration")]
     [SerializeField] private float regenInterval = 1;
     [SerializeField] private bool canRegenerateHealth = true;
@@ -39,6 +40,8 @@ public class Entity_Health : MonoBehaviour, IDamageable
         entityStats = GetComponent<Entity_Stats>();
         healthBar = GetComponentInChildren<Slider>();
         dropManager = GetComponent<Entity_DropManager>();
+        healthBarUI = GetComponentInChildren<UI_MiniHealthBar>();
+        
          
         SetupHealth();
     }
@@ -144,11 +147,13 @@ public class Entity_Health : MonoBehaviour, IDamageable
 
     private void UpdateHealthBar()
     {
-        if (healthBar == null)
+        if (healthBar == null && healthBarUI.gameObject.activeSelf == false)
             return;
 
         healthBar.value = currentHealth / entityStats.GetMaxHealth();
     }
+    
+    public void EnableHealthBar(bool enable) => healthBarUI?.gameObject.SetActive(enable);
 
 
     private void TakeKnockback(Transform damageDealer, float finalDamage)

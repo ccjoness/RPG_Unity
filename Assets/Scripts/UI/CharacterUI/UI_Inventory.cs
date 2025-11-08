@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UI_Inventory : MonoBehaviour
 {
     private Inventory_Player inventory;
-
+    [SerializeField] private TextMeshProUGUI goldText;
 
     [SerializeField] private UI_ItemSlotParent inventorySlotsParent;
     [SerializeField] private UI_EquipSlotParent uiEquipSlotsParent;
@@ -16,10 +16,11 @@ public class UI_Inventory : MonoBehaviour
 
         UpdateUI();
     }
-
+    
     private void UpdateUI()
     {
         inventorySlotsParent.UpdateSlots(inventory.itemList);
         uiEquipSlotsParent.UpdateEquipmentSlots(inventory.equipList);
+        goldText.text = inventory.gold.ToString("N0");
     }
 }

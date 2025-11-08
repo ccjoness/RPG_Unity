@@ -1,0 +1,21 @@
+using System;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UI_Options : MonoBehaviour
+{
+    private Player player;
+    [SerializeField] private Toggle healthBarToggle;
+
+    private void Start()
+    {
+        player = FindFirstObjectByType<Player>();
+        
+        healthBarToggle.onValueChanged.AddListener(OnHealthBarToggleChange);
+    }
+
+    private void OnHealthBarToggleChange(bool isOn)
+    {
+        player.health.EnableHealthBar(isOn);
+    }
+}

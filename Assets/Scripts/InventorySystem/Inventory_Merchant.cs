@@ -29,6 +29,7 @@ public class Inventory_Merchant : Inventory_Base
             if (itemToBuy.itemData.itemType == ItemType.Material)
             {
                 inventory.storage.AddMaterialToStash(itemToBuy);
+                RemoveGoldAndItem(itemToBuy);
             }
             else
             {
@@ -36,14 +37,18 @@ public class Inventory_Merchant : Inventory_Base
                 {
                     var itemToAdd = new Inventory_Item(itemToBuy.itemData);
                     inventory.AddItem(itemToAdd);
+                    RemoveGoldAndItem(itemToBuy);
                 }
             }
-
-            inventory.gold = inventory.gold - itemToBuy.buyPrice;
-            RemoveOneItem(itemToBuy);
         }
 
         TriggerUpdateUI();
+    }
+
+    private void RemoveGoldAndItem(Inventory_Item itemToBuy)
+    {
+        inventory.gold = inventory.gold - itemToBuy.buyPrice;
+        RemoveOneItem(itemToBuy);
     }
 
     public void TrySellItem(Inventory_Item itemToSell, bool sellFullStack)
