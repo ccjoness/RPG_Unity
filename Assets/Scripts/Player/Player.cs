@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
-using Unity.Cinemachine;
 using UnityEngine;
 
 public class Player : Entity
 {
+    public static Player instance;
     public static event Action OnPlayerDeath;
-    public UI ui {get; private set;}
-    
+
+    public UI ui { get; private set; }
     public PlayerInputSet input { get; private set; }
     public Player_SkillManager skillManager { get; private set; }
     public Player_VFX vfx { get; private set; }
@@ -18,6 +18,7 @@ public class Player : Entity
     public Player_Stats stats { get; private set; }
     
     #region State Variables
+
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
     public Player_JumpState jumpState { get; private set; }
@@ -31,6 +32,7 @@ public class Player : Entity
     public Player_CounterAttackState counterAttackState { get; private set; }
     public Player_SwordThrowState swordThrowState { get; private set; }
     public Player_DomainExpansionState domainExpansionState { get; private set; }
+
     #endregion
 
     [Header("Attack Details")]
@@ -61,6 +63,7 @@ public class Player : Entity
     protected override void Awake()
     {
         base.Awake();
+        instance = this;
 
         ui = FindAnyObjectByType<UI>();
         vfx = GetComponent<Player_VFX>();
@@ -70,9 +73,8 @@ public class Player : Entity
         combat = GetComponent<Player_Combat>();
         inventory = GetComponent<Inventory_Player>();
         stats = GetComponent<Player_Stats>();
-        
+
         input = new PlayerInputSet();
-        
         ui.SetupControlsUI(input);
 
         #region State Instantiation

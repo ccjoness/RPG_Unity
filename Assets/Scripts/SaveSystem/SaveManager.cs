@@ -6,12 +6,19 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
+    public static SaveManager instance;
+    
     private FileDataHandler dataHandler;
     private GameData gameData;
     private List<ISaveable> allSaveables;
     
     [SerializeField] private string fileName = "unityLearningRpg.json";
     [SerializeField] private bool encryptData = true;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private IEnumerator Start()
     {
@@ -45,6 +52,8 @@ public class SaveManager : MonoBehaviour
         
         dataHandler.SaveData(gameData);
     }
+    
+    public GameData GetGameData() => gameData;
 
     [ContextMenu("*** Delete Save Data ***")]
     public void DeleteSavedData()

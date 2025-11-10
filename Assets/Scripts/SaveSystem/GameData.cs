@@ -16,6 +16,9 @@ public class GameData
    public int skillPoints;
    public SerializableDictionary<string, bool> skillTreeUI;
    public SerializableDictionary<SkillType, SkillUpgradeType> skillUpgrades;
+   public SerializableDictionary<string, bool> chests;
+
+   public Vector3 savedCheckPoint;
    
    public GameData()
    {
@@ -27,5 +30,7 @@ public class GameData
       
       skillTreeUI = new SerializableDictionary<string, bool>();
       skillUpgrades = new SerializableDictionary<SkillType, SkillUpgradeType>();
+      
+      chests = new SerializableDictionary<string, bool>();
    }
 }
