@@ -10214,7 +10214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInventorySize: 10
   itemList: []
-  gold: 1000
+  itemDatabase: {fileID: 11400000, guid: d7f2359254baff54b910f2af75930bbb, type: 2}
   equipList:
   - slotType: 1
     equippedItem:
@@ -10243,6 +10243,7 @@ MonoBehaviour:
   - itemData: {fileID: 0}
     stackSize: 0
     itemEffect: {fileID: 0}
+  gold: 1000
 --- !u!114 &225182567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94538,6 +94539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInventorySize: 15
   itemList: []
+  itemDatabase: {fileID: 11400000, guid: d7f2359254baff54b910f2af75930bbb, type: 2}
   materialStash: []
 --- !u!1 &569349565
 GameObject:
@@ -445521,6 +445523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInventorySize: 30
   itemList: []
+  itemDatabase: {fileID: 11400000, guid: d7f2359254baff54b910f2af75930bbb, type: 2}
   shopData: {fileID: 11400000, guid: 845cc2be71f1024429496b5327d1c31b, type: 2}
   minItemsAmount: 4
 --- !u!1 &1641368165
@@ -455108,7 +455111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -111.50003, y: 0}
+  m_AnchoredPosition: {x: -111.49997, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1855682405
@@ -458089,6 +458092,52 @@ MonoBehaviour:
   itemIcon: {fileID: 199893384}
   itemStackSize: {fileID: 1629235967}
   slotType: 1
+--- !u!1 &1935389258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1935389260}
+  - component: {fileID: 1935389259}
+  m_Layer: 0
+  m_Name: '*** SAVE MANAGER ***'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1935389259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935389258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 901b8f0f6b6fa4a48a761f32c85c7d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: unityLearningRpg.json
+  encryptData: 0
+--- !u!4 &1935389260
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935389258}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1257.2231, y: 694.40265, z: -0.77061486}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1935655718
 GameObject:
   m_ObjectHideFlags: 0
@@ -465591,3 +465640,4 @@ SceneRoots:
   - {fileID: 1697891357}
   - {fileID: 1640318259}
   - {fileID: 567633085}
+  - {fileID: 1935389260}

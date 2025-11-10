@@ -154,4 +154,86 @@ public class Inventory_Storage : Inventory_Base
 
         TriggerUpdateUI();
     }
+
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+
+        data.storageItems.Clear();
+
+        foreach (var item in itemList)
+        {
+            if (item != null && item.itemData.saveID != null)
+            {
+                string saveID = item.itemData.saveID;
+
+                data.storageItems.TryAdd(saveID, 0);
+                data.storageItems[saveID] += item.stackSize;
+            }
+        }
+        
+        data.storageMaterials.Clear();
+        
+        foreach (var item in materialStash)
+        {
+            if (item != null && item.itemData.saveID != null)
+            {
+                string saveID = item.itemData.saveID;
+
+                data.storageMaterials.TryAdd(saveID, 0);
+                data.storageMaterials[saveID] += item.stackSize;
+            }
+        }
+    }
+    
+    public override void LoadData(GameData data)
+    {
+        itemList.Clear();
+        materialStash.Clear();
+
+        foreach (var entry in data.storageItems)
+        {
+            string saveID = entry.Key;
+            int stackSize = entry.Value;
+
+            Item_DataSO itemData = itemDatabase.GetItemData(saveID);
+
+            if (itemData == null)
+            {
+                Debug.Log("Item Not Found!");
+                continue;
+            }
+            
+            // Updated for bug found after course
+            for (int i = 0; i < stackSize; i++)
+            {
+                Inventory_Item itemToLoad = new Inventory_Item(itemData);
+                AddItem(itemToLoad);
+            }
+        }
+        
+        
+        foreach (var entry in data.storageMaterials)
+        {
+            string saveID = entry.Key;
+            int stackSize = entry.Value;
+
+            Item_DataSO itemData = itemDatabase.GetItemData(saveID);
+
+            if (itemData == null)
+            {
+                Debug.Log("Item Not Found!");
+                continue;
+            }
+            
+            // Updated for bug found after course
+            for (int i = 0; i < stackSize; i++)
+            {
+                Inventory_Item itemToLoad = new Inventory_Item(itemData);
+                AddMaterialToStash(itemToLoad);
+            }
+        }
+
+        TriggerUpdateUI();
+    }
 }
