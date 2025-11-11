@@ -40,9 +40,7 @@ public class SaveManager : MonoBehaviour
         }
 
         foreach (var saveable in allSaveables)
-        {
             saveable.LoadData(gameData);
-        }
     }
 
     public void SaveGame()
@@ -60,6 +58,8 @@ public class SaveManager : MonoBehaviour
     {
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, encryptData);
         dataHandler.Delete();
+
+        LoadGame();
     }
 
     private void OnApplicationQuit()

@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Object_Chest : MonoBehaviour, IDamageable
+public class Object_Chest : MonoBehaviour, IDamageable, ISaveable
 {
 
-    private UniqueID idComponent;
+    [SerializeField] private string chestId;
     private Rigidbody2D rb => GetComponentInChildren<Rigidbody2D>();
     private Animator anim => GetComponentInChildren<Animator>();
     private Entity_VFX fx => GetComponent<Entity_VFX>();
@@ -14,22 +14,22 @@ public class Object_Chest : MonoBehaviour, IDamageable
     [Header("Open Details")]
     [SerializeField] private Vector2 knockback;
     [SerializeField] private bool canDropItems = true;
-
-
-    private void Awake()
-    {
-        idComponent = GetComponent<UniqueID>();
-    }
     
-    public string GetID() => idComponent.ID;
-
-    public bool ChestOpen() => !canDropItems;
+    private void OnValidate()
+    {
+#if UNITY_EDITOR
+        if (string.IsNullOrEmpty(chestId))
+        {
+            chestId = Guid.NewGuid().ToString();
+        }
+#endif
+    }
 
     public void SetStateFromSave(bool chestOpen)
     {
         if (chestOpen)
         {
-            this.canDropItems = !chestOpen;
+            this.canDropItems = false;
             anim.SetBool("chestOpen", true);
         }
         
@@ -49,5 +49,19 @@ public class Object_Chest : MonoBehaviour, IDamageable
         rb.angularVelocity = Random.Range(-200f, 200f);
         
         return true;
+    }
+
+    public void LoadData(GameData data)
+    {
+        bool open = data.chests.TryGetValue(chestId, out open);
+        SetStateFromSave(open);
+    }
+    
+    public void SaveData(ref GameData data)
+    {
+        if (canDropItems)
+            return;
+
+        data.chests.TryAdd(chestId, true);
     }
 }

@@ -16,9 +16,15 @@ public class GameData
    public int skillPoints;
    public SerializableDictionary<string, bool> skillTreeUI;
    public SerializableDictionary<SkillType, SkillUpgradeType> skillUpgrades;
-   public SerializableDictionary<string, bool> chests;
+   
+   public SerializableDictionary<string, bool> chests; // chest id | is opened
 
-   public Vector3 savedCheckPoint;
+   public SerializableDictionary<string, bool> unlockedCheckpoints; // checkpoint id | unlocked status
+   
+   // Town Portal
+   public SerializableDictionary<string, Vector3> inScenePortals; // scene name | portal position
+   public string portalDestinationSceneName;
+   public bool returningFromTown;
    
    public GameData()
    {
@@ -32,5 +38,8 @@ public class GameData
       skillUpgrades = new SerializableDictionary<SkillType, SkillUpgradeType>();
       
       chests = new SerializableDictionary<string, bool>();
+      
+      unlockedCheckpoints = new SerializableDictionary<string, bool>();
+      inScenePortals = new SerializableDictionary<string, Vector3>();
    }
 }

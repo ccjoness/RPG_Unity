@@ -14,7 +14,10 @@ public class ItemEffect_Buff : ItemEffect_DataSO
 
       
       if (player.stats.CanApplyBuffOf(source))
+      {
+         this.player = player;
          return true;
+      }
       else
       {
          Debug.Log("Same buff effect cannot be used twice.");
