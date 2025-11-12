@@ -1,12 +1,15 @@
-using System.Linq;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, ISaveable
 {
     public static GameManager instance;
-    private Vector3 lastDeathPosition;
+    private Vector3 lastPlayerPosition;
+
+    private string lastScenePlayed;
+    private bool dataLoaded;
 
     private void Awake()
     {
@@ -20,7 +23,9 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void SetLastDeathPosition(Vector3 position) => lastDeathPosition = position;
+    // public void SetLastPlayerPosition(Vector3 position) => lastPlayerPosition = position;
+    
+    public void ContinueGame() => ChangeScene(lastScenePlayed, RespawnType.NonSpecific);
 
     public void RestartScene()
     {
@@ -31,24 +36,41 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(string sceneName, RespawnType respawnType)
     {
         SaveManager.instance.SaveGame();
+        Time.timeScale = 1;
         StartCoroutine(ChangeSceneCo(sceneName, respawnType));
     }
 
     private IEnumerator ChangeSceneCo(string sceneName, RespawnType respawnType)
     {
-        // fade effect
-        
-        yield return new WaitForSeconds(1f);
+        UI_FadeScreen fadeScreen = FindFadeScreenUI();
+
+        fadeScreen.FadeOut();
+        yield return fadeScreen.fadeEffectCo;
 
         SceneManager.LoadScene(sceneName);
-        
-        yield return new WaitForSeconds(.2f);
 
+        dataLoaded = false;
+        yield return null;
+        
+        while (dataLoaded == false)
+            yield return null;
+        
+        fadeScreen = FindFadeScreenUI();
+        fadeScreen.FadeIn();
+        
+        Player player = Player.instance;
+        
+        if (player == null)
+            yield break;
+        
         Vector3 position = GetNewPlayerPosition(respawnType);
         
         if (position != Vector3.zero)
-            Player.instance.TeleportPlayer(position);
+            player.TeleportPlayer(position);
     }
+    
+    private UI_FadeScreen FindFadeScreenUI() => UI.instance != null ? UI.instance.fadeScreenUI : FindFirstObjectByType<UI_FadeScreen>();
+    
 
     private Vector3 GetNewPlayerPosition(RespawnType type)
     {
@@ -72,7 +94,7 @@ public class GameManager : MonoBehaviour
                 .Where(cp => data.unlockedCheckpoints.TryGetValue(cp.GetCheckpointId(), out bool unlocked) && unlocked)
                 .Select(cp => cp.GetPosition())
                 .ToList();
-            
+
             var enterWaypoints = FindObjectsByType<Object_Waypoint>(FindObjectsSortMode.None)
                 .Where(wp => wp.GetWaypointType() == RespawnType.Enter)
                 .Select(wp => wp.GetPositionAndSetTriggerFalse())
@@ -82,7 +104,9 @@ public class GameManager : MonoBehaviour
             
             if (selectedPositions.Count == 0)
                 return Vector3.zero;
-            return selectedPositions.OrderBy(position => Vector3.Distance(position, lastDeathPosition)).First();
+            return selectedPositions
+                .OrderBy(position => Vector3.Distance(position, lastPlayerPosition))
+                .First();
         }
 
         return GetWaypointPosition(type);
@@ -99,5 +123,28 @@ public class GameManager : MonoBehaviour
         }
 
         return Vector3.zero;
+    }
+
+    public void LoadData(GameData data)
+    {
+        lastScenePlayed = data.lastScenePlayed;
+        lastPlayerPosition = data.lastPlayerPosition;
+        
+        if (string.IsNullOrEmpty(lastScenePlayed))
+            lastScenePlayed = "Level_0";
+        
+        dataLoaded = true;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene == "MainMenu")
+            return;
+
+        data.lastPlayerPosition = Player.instance.transform.position;
+        data.lastScenePlayed = currentScene;
+        dataLoaded = false;
     }
 }

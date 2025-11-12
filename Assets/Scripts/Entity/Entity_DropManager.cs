@@ -1,8 +1,6 @@
-using System;
-using UnityEngine;
-using System.Linq;
 using System.Collections.Generic;
-using Random = UnityEngine.Random;
+using System.Linq;
+using UnityEngine;
 
 public class Entity_DropManager : MonoBehaviour
 {
@@ -24,6 +22,7 @@ public class Entity_DropManager : MonoBehaviour
         if (dropData == null)
         {
             Debug.Log($"You need to assign Drop Data on entity {gameObject.name}.");
+            return;
         }
         
         List<Item_DataSO> itemsToDrop = RollDrops();
@@ -45,13 +44,13 @@ public class Entity_DropManager : MonoBehaviour
     {
         List<Item_DataSO> possibleDrops = new List<Item_DataSO>();
         List<Item_DataSO> finalDrops = new List<Item_DataSO>();
-        maxRarityAmount = this.maxRarityAmount;
+        float maxRarityAmount = this.maxRarityAmount;
         
         foreach (var item in dropData.itemList)
         {
-            float dropChange = item.GetDropChance();
+            float dropChance = item.GetDropChance();
             
-            if (Random.Range(0, 100) <= dropChange)
+            if (Random.Range(0, 100) <= dropChance)
                 possibleDrops.Add(item);
         }
 

@@ -22,16 +22,18 @@ public class SaveManager : MonoBehaviour
 
     private IEnumerator Start()
     {
+        // Debug.Log(Application.persistentDataPath);
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, encryptData);
         allSaveables = FindISaveables();
 
-        yield return new WaitForSeconds(.01f);
+        yield return null;
         LoadGame();
     }
 
     private void LoadGame()
     {
         gameData = dataHandler.LoadData();
+
         if (gameData == null)
         {
             Debug.Log("No save data found, creating new save.");

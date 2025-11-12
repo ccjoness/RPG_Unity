@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 3208547714191153685}
   - component: {fileID: 8445763458290384439}
   - component: {fileID: 1810570370631146493}
-  - component: {fileID: 1518440336659539907}
   - component: {fileID: 6585664371519401173}
+  - component: {fileID: 1518440336659539907}
   - component: {fileID: 1794593771160585108}
   - component: {fileID: 3092074778000943788}
   - component: {fileID: 7826945546849726693}
@@ -235,6 +235,18 @@ MonoBehaviour:
   lightningStrikeVfx: {fileID: 7471958382192282653, guid: 63116a110fcf3c74d9bc7f38ee9f73cf, type: 3}
   currentCharge: 0
   maxCharge: 1
+--- !u!114 &6585664371519401173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 887886044351236943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04091dce66638044ab3b374f0f2e567d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1518440336659539907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,18 +267,6 @@ MonoBehaviour:
   knockbackDuration: 0.2
   heavyKnockbackDuration: 0.5
   heavyDamageThreshold: 0.3
---- !u!114 &6585664371519401173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 887886044351236943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04091dce66638044ab3b374f0f2e567d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1794593771160585108
 MonoBehaviour:
   m_ObjectHideFlags: 0

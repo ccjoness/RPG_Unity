@@ -89,7 +89,7 @@ public class Player : Entity
         jumpAttackState = new Player_JumpAttackState(this, stateMachine, "jumpAttack");
         deadState = new Player_DeadState(this, stateMachine, "dead");
         counterAttackState = new Player_CounterAttackState(this, stateMachine, "counterAttack");
-        swordThrowState = new Player_SwordThrowState (this, stateMachine, "swordThrow");
+        swordThrowState = new Player_SwordThrowState(this, stateMachine, "swordThrow");
         domainExpansionState = new Player_DomainExpansionState(this, stateMachine, "jumpFall");
         #endregion
     }
@@ -167,7 +167,7 @@ public class Player : Entity
         {
             IInteractable interactable = target.GetComponent<IInteractable>();
             if (interactable == null) continue;
-            
+
             float distance = Vector2.Distance(transform.position, target.transform.position);
 
             if (distance < closestDistance)
@@ -176,27 +176,29 @@ public class Player : Entity
                 closest = target.transform;
             }
         }
+
         if (closest == null)
             return;
-        
+
         closest.GetComponent<IInteractable>().Interact();
     }
 
     private void OnEnable()
     {
         input.Enable();
-        
-        input.Player.Mouse.performed += ctx => mousePosition = ctx.ReadValue<Vector2>(); 
+
+        input.Player.Mouse.performed += ctx => mousePosition = ctx.ReadValue<Vector2>();
 
         input.Player.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         input.Player.Movement.canceled += ctx => moveInput = Vector2.zero;
-        
-        input.Player.Interact.performed += ctx => TryInteract();
-        input.Player.QuickItemSlot_1.performed += ctx => inventory.TryUseQuickItemInSlot(1);
-        input.Player.QuickItemSlot_2.performed += ctx => inventory.TryUseQuickItemInSlot(2);
-        
+
         input.Player.Spell.performed += ctx => skillManager.shard.TryUseSkill();
         input.Player.Spell.performed += ctx => skillManager.timeEcho.TryUseSkill();
+
+        input.Player.Interact.performed += ctx => TryInteract();
+
+        input.Player.QuickItemSlot_1.performed += ctx => inventory.TryUseQuickItemInSlot(1);
+        input.Player.QuickItemSlot_2.performed += ctx => inventory.TryUseQuickItemInSlot(2);
     }
 
     private void OnDisable()

@@ -9,7 +9,6 @@ public class Entity : MonoBehaviour
 
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
-    
     protected StateMachine stateMachine;
 
 
@@ -35,7 +34,7 @@ public class Entity : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        
+
         stateMachine = new StateMachine();
     }
 
@@ -61,7 +60,7 @@ public class Entity : MonoBehaviour
 
     }
     
-    public void SlowDownEntity(float duration, float slowMultiplier, bool canOverrideSlowEffect = false)
+    public virtual void SlowDownEntity(float duration, float slowMultiplier, bool canOverrideSlowEffect = false)
     {
         if (slowDownCo != null)
         {

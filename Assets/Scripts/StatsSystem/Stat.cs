@@ -37,13 +37,14 @@ public class Stat
 
     private float GetFinalValue()
     {
-        float _finalValue = baseValue;
+        float finalValue = baseValue;
+
         foreach (var modifier in modifiers)
         {
-            _finalValue += modifier.value;
+            finalValue += modifier.value;
         }
 
-        return _finalValue;
+        return finalValue;
     }
     
     public void SetBaseValue(float value) => baseValue = value;

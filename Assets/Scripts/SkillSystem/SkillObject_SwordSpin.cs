@@ -2,50 +2,50 @@ using UnityEngine;
 
 public class SkillObject_SwordSpin : SkillObject_Sword
 {
-   private int maxDistance;
-   private float attacksPerSecond;
-   private float attackTimer;
+    private int maxDistance;
+    private float attacksPerSecond;
+    private float attackTimer;
 
+    public override void SetupSword(Skill_SwordThrow swordManager, Vector2 direction)
+    {
+        base.SetupSword(swordManager, direction);
 
-   public override void SetupSword(Skill_SwordThrow _swordManager, Vector2 direction)
-   {
-      base.SetupSword(_swordManager, direction);
-      
-      anim?.SetTrigger("spin");
-      
-      maxDistance = _swordManager.maxDistance;
-      attacksPerSecond = _swordManager.attacksPerSecond;
-      
-      Invoke(nameof(GetSwordBackToPlayer), _swordManager.maxSpinDuration);
-   }
+        anim?.SetTrigger("spin");
 
-   protected override void Update()
-   {
-      HandleAttack();
-      HandleStopping();
-      HandleComeback();
-   }
+        maxDistance = swordManager.maxDistance;
+        attacksPerSecond = swordManager.attacksPerSecond;
 
-   private void HandleStopping()
-   {
-      float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
-      if (distanceToPlayer > maxDistance && rb.simulated)
-         rb.simulated = false;
-   }
-   
-   private void HandleAttack()
-   {
-      attackTimer -= Time.deltaTime;
+        Invoke(nameof(GetSwordBackToPlayer), swordManager.maxSpinDuration);
+    }
 
-      if (attackTimer < 0)
-      {
-         DamageEnemiesInRadius(transform, 1);
-         attackTimer = 1 /  attacksPerSecond;
-      }
-   }
+    protected override void Update()
+    {
+        HandleAttack();
+        HandleStopping();
+        HandleComeback();
+    }
 
-   protected override void OnTriggerEnter2D(Collider2D collision)
-   {
-      rb.simulated = false;
-   }
+    private void HandleStopping()
+    {
+        float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
+        
+        if (distanceToPlayer > maxDistance && rb.simulated)
+            rb.simulated = false;
+    }
+
+    private void HandleAttack()
+    {
+        attackTimer -= Time.deltaTime;
+
+        if (attackTimer < 0)
+        {
+            DamageEnemiesInRadius(transform, 1);
+            attackTimer = 1 / attacksPerSecond;
+        }
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        rb.simulated = false;
+    }
 }

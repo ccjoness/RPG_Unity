@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class Skill_TimeEcho : Skill_Base
 {
+    private SkillObject_TimeEcho lastEchoCreated;
+
     [SerializeField] private GameObject timeEchoPrefab;
     [SerializeField] private float timeEchoDuration;
-    
+
     [Header("Attack Upgrades")]
     [SerializeField] private int maxAttacks = 3;
     [SerializeField] private float duplicateChance = .3f;
@@ -18,7 +20,7 @@ public class Skill_TimeEcho : Skill_Base
     {
         if (ShouldBeWisp() == false)
             return 0;
-        
+
         return damagePercentHealed;
     }
 
@@ -26,7 +28,7 @@ public class Skill_TimeEcho : Skill_Base
     {
         if (upgradeType != SkillUpgradeType.TimeEcho_CooldownWisp)
             return 0;
-        
+
         return cooldownReducedInSeconds;
     }
 
@@ -43,10 +45,10 @@ public class Skill_TimeEcho : Skill_Base
     {
         if (upgradeType != SkillUpgradeType.TimeEcho_ChanceToDuplicate)
             return 0;
-        
+
         return duplicateChance;
     }
-    
+
     public int GetMaxAttacks()
     {
         if (upgradeType == SkillUpgradeType.TimeEcho_SingleAttack || upgradeType == SkillUpgradeType.TimeEcho_ChanceToDuplicate)
@@ -54,20 +56,20 @@ public class Skill_TimeEcho : Skill_Base
 
         if (upgradeType == SkillUpgradeType.TimeEcho_MultiAttack)
             return maxAttacks;
-        
+
         return 0;
     }
-    
+
     public float GetEchoDuration()
     {
         return timeEchoDuration;
     }
-    
+
     public override void TryUseSkill()
     {
         if (CanUseSkill() == false)
             return;
-        
+
         CreateTimeEcho();
         SetSkillOnCooldown();
     }
@@ -75,7 +77,7 @@ public class Skill_TimeEcho : Skill_Base
     public void CreateTimeEcho(Vector3? targetPosition = null)
     {
         Vector3 position = targetPosition ?? transform.position;
-        
+
         GameObject timeEcho = Instantiate(timeEchoPrefab, position, Quaternion.identity);
         timeEcho.GetComponent<SkillObject_TimeEcho>().SetupEcho(this);
     }

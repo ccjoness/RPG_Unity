@@ -57,8 +57,6 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         {
             itemStackSize.text = "";
             itemIcon.color = Color.clear;
-            
-            
             return;
         }
         

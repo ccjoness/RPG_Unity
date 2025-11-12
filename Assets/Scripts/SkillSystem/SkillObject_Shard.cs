@@ -19,10 +19,10 @@ public class SkillObject_Shard : SkillObject_Base
         transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
     }
 
-    public void MoveTowardsClosestTarget(float _speed, Transform newTarget = null)
+    public void MoveTowardsClosestTarget(float speed, Transform newTarget = null)
     {
         target = newTarget == null ? FindClosestTarget() : newTarget;
-        this.speed = _speed;
+        this.speed = speed;
     }
 
     public void SetupShard(Skill_Shard shardManager)
@@ -37,16 +37,16 @@ public class SkillObject_Shard : SkillObject_Base
         Invoke(nameof(Explode), detonationTime);
     }
 
-    public void SetupShard(Skill_Shard _shardManager, float detonationTime, bool canMove, float shardSpeed, Transform _target = null)
+    public void SetupShard(Skill_Shard shardManager, float detonationTime, bool canMove, float shardSpeed,Transform target = null)
     {
-        this.shardManager = _shardManager;
+        this.shardManager = shardManager;
         playerStats = shardManager.player.stats;
         damageScaleData = shardManager.damageScaleData;
 
         Invoke(nameof(Explode), detonationTime);
 
         if (canMove)
-            MoveTowardsClosestTarget(shardSpeed, _target);
+            MoveTowardsClosestTarget(shardSpeed,target);
     }
 
     public void Explode()
@@ -55,7 +55,6 @@ public class SkillObject_Shard : SkillObject_Base
         GameObject vfx = Instantiate(vfxPrefab, transform.position, Quaternion.identity);
         vfx.GetComponentInChildren<SpriteRenderer>().color = shardManager.player.vfx.GetElementColor(usedElement, false);
         OnExplode?.Invoke();
-
         Destroy(gameObject);
     }
 

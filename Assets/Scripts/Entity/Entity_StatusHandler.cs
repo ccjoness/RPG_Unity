@@ -42,23 +42,7 @@ public class Entity_StatusHandler : MonoBehaviour
             ApplyShockEffect(effectData.shockDuration, effectData.shockDamage, effectData.shockCharge);
     }
 
-    private void ApplyBurnEffect(float duration, float fireDamage)
-    {
-        float fireResistance = entityStats.GetElementalResistance(ElementType.Fire);
-        float finalDamage = fireDamage * (1 - fireResistance);
-
-        StartCoroutine(ApplyBurnEffectCo(duration, finalDamage));
-    }
-
-    private void ApplyChillEffect(float duration, float slowMultiplier)
-    {
-        float iceResistance = entityStats.GetElementalResistance(ElementType.Ice);
-        float reduceDuration = duration * (1 - iceResistance);
-
-        StartCoroutine(ChillEffectCo(reduceDuration, slowMultiplier));
-    }
-
-    public void ApplyShockEffect(float duration, float damage, float charge)
+    private void ApplyShockEffect(float duration, float damage, float charge)
     {
         float shockResistance = entityStats.GetElementalResistance(ElementType.Lightning);
         float finalCharge = charge * (1 - shockResistance);
@@ -70,18 +54,11 @@ public class Entity_StatusHandler : MonoBehaviour
             StopShockEffect();
             return;
         }
+
         if (shockEffectCo != null)
             StopCoroutine(shockEffectCo);
             
         shockEffectCo = StartCoroutine(ShockEffectCo(duration));
-    }
-
-    private IEnumerator ShockEffectCo(float duration)
-    {
-        currentEffect = ElementType.Lightning;
-        entityVfx.PlayOnStatusVfx(duration, ElementType.Lightning);
-        yield return new WaitForSeconds(duration);
-        StopShockEffect();
     }
 
     private void StopShockEffect()
@@ -90,13 +67,30 @@ public class Entity_StatusHandler : MonoBehaviour
         currentCharge = 0;
         entityVfx.StopAllVfx();
     }
-
+    
     private void DoLightningStrike(float damage)
     {
         Instantiate(lightningStrikeVfx, transform.position, Quaternion.identity);
         entityHealth.ReduceHealth(damage);
     }
 
+    private IEnumerator ShockEffectCo(float duration)
+    {
+        currentEffect = ElementType.Lightning;
+        entityVfx.PlayOnStatusVfx(duration, ElementType.Lightning);
+
+        yield return new WaitForSeconds(duration);
+        StopShockEffect();
+    }
+
+    private void ApplyBurnEffect(float duration, float fireDamage)
+    {
+        float fireResistance = entityStats.GetElementalResistance(ElementType.Fire);
+        float finalDamage = fireDamage * (1 - fireResistance);
+
+        StartCoroutine(ApplyBurnEffectCo(duration, finalDamage));
+    }
+    
     private IEnumerator ApplyBurnEffectCo(float duration, float totalDamage)
     {
         currentEffect = ElementType.Fire;
@@ -117,21 +111,30 @@ public class Entity_StatusHandler : MonoBehaviour
         currentEffect = ElementType.None;
     }
 
+    private void ApplyChillEffect(float duration, float slowMultiplier)
+    {
+        float iceResistance = entityStats.GetElementalResistance(ElementType.Ice);
+        float reduceDuration = duration * (1 - iceResistance);
+
+        StartCoroutine(ChillEffectCo(reduceDuration, slowMultiplier));
+    }
+
     private IEnumerator ChillEffectCo(float duration, float slowMultiplier)
     {
         entity.SlowDownEntity(duration, slowMultiplier);
         currentEffect = ElementType.Ice;
         entityVfx.PlayOnStatusVfx(duration, ElementType.Ice);
-        yield return new WaitForSeconds(duration);
 
+        yield return new WaitForSeconds(duration);
         currentEffect = ElementType.None;
     }
 
 
-    private bool CanBeApplied(ElementType element)
+    public bool CanBeApplied(ElementType element)
     {
         if (element == ElementType.Lightning && currentEffect == ElementType.Lightning)
             return true;
+
         return currentEffect == ElementType.None;
     }
 }

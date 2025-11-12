@@ -18,19 +18,20 @@ public class Player_VFX : Entity_VFX
     {
         if (imageEchoCo != null)
             StopCoroutine(imageEchoCo);
+
         imageEchoCo = StartCoroutine(ImageEchoEffectCo(duration));
     }
     
     private IEnumerator ImageEchoEffectCo(float duration)
     {
-        float time = 0;
+        float timeTracker = 0;
 
-        while (time < duration)
+        while (timeTracker < duration)
         {
             CreateImageEcho();
-            
+
             yield return new WaitForSeconds(imageEchoInterval);
-            time += imageEchoInterval;
+            timeTracker = timeTracker + imageEchoInterval;
         }
     }
 

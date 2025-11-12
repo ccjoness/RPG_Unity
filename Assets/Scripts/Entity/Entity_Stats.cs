@@ -73,8 +73,6 @@ public class Entity_Stats : MonoBehaviour
             case ElementType.Lightning:
                 baseResistance = defense.lightningRes.GetValue();
                 break;
-            case ElementType.None:
-                break;
         }
 
         float resistance = baseResistance + bonusResistance;

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Entity_VFX : MonoBehaviour
 {
+
     protected SpriteRenderer sr;
     private Entity entity;
 
@@ -25,7 +26,7 @@ public class Entity_VFX : MonoBehaviour
     [SerializeField] private Color shockVfx = Color.yellow;
     private Color originalHitVfxColor;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         entity = GetComponent<Entity>();
         sr = GetComponentInChildren<SpriteRenderer>();
@@ -54,7 +55,6 @@ public class Entity_VFX : MonoBehaviour
         StopAllCoroutines();
         sr.color = Color.white;
         sr.material = originalMaterial;
-
     }
     
     private IEnumerator PlayStatusVfxCo(float duration, Color effectColor)
@@ -71,6 +71,7 @@ public class Entity_VFX : MonoBehaviour
         {
             sr.color = toggle ? lightColor : darkColor;
             toggle = !toggle;
+
             yield return new WaitForSeconds(tickInterval);
             timeHasPassed += tickInterval;
         }
@@ -82,9 +83,9 @@ public class Entity_VFX : MonoBehaviour
     {
         GameObject hitPrefab = isCrit ? critHitVfx : hitVfx;
         GameObject vfx = Instantiate(hitPrefab, target.position, Quaternion.identity);
-        vfx.GetComponentInChildren<SpriteRenderer>().color = GetElementColor(element, isCrit);            
+        vfx.GetComponentInChildren<SpriteRenderer>().color = GetElementColor(element, isCrit);
         
-        if (entity.facingDir == -1 && isCrit )
+        if (entity.facingDir == -1 && isCrit)
             vfx.transform.Rotate(0, 180, 0);
     }
 

@@ -7,7 +7,7 @@ public class Skill_DomainExpansion : Skill_Base
 
     [Header("Slowing Down Upgrade")]
     [SerializeField] private float slowdownPercent = .8f;
-    [SerializeField] private float slowdownDomainDuration = .8f;
+    [SerializeField] private float slowdownDomainDuration = 5;
     
     [Header("Shard Cast Upgrade")]
     [SerializeField] private int shardsToCast = 10;

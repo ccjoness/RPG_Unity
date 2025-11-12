@@ -11,6 +11,18 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
     private UI_TreeNode[] allTreeNodes;
     public Player_SkillManager skillManager { get ; private set; }
 
+
+    private void Start()
+    {
+        UpdateAllConnections();
+        UpdateSkillPointsUI();
+    }
+
+    private void UpdateSkillPointsUI()
+    {
+        skillPointsText.text = skillPoints.ToString();
+    }
+
     public void UnlockDefaultSkills()
     {
         allTreeNodes = GetComponentsInChildren<UI_TreeNode>(true);
@@ -20,12 +32,6 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
             node.UnlockDefaultSkill();
     }
 
-    private void Start()
-    {
-        UpdateAllConnections();
-        UpdateSkillPointsText();
-    }
-    
     [ContextMenu("Reset Skill Tree")]
     public void RefundAllSkills()
     {
@@ -34,19 +40,19 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
         foreach (var node in skillNodes)
             node.Refund();
     }
-    
-    private void UpdateSkillPointsText() => skillPointsText.text = $"{skillPoints}";
+
     public bool EnoughSkillPoints(int cost) => skillPoints >= cost;
     
-    public void RemoveSkillPoints(int cost) {
+    public void RemoveSkillPoints(int cost)
+    {
         skillPoints -= cost;
-        UpdateSkillPointsText();
+        UpdateSkillPointsUI();
     }
     
     public void AddSkillPoints(int points)
     {
         skillPoints += points;
-        UpdateSkillPointsText();
+        UpdateSkillPointsUI();
     }
 
 
@@ -67,7 +73,7 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
         foreach (var node in allTreeNodes)
         {
             string skillName = node.skillData.displayName;
-            
+
             if (data.skillTreeUI.TryGetValue(skillName, out bool unlocked) && unlocked)
                 node.UnlockWithSaveData();
         }
@@ -77,10 +83,10 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
             if (data.skillUpgrades.TryGetValue(skill.GetSkillType(), out SkillUpgradeType upgradeType))
             {
                 var upgradeNode = allTreeNodes.FirstOrDefault(node => node.skillData.upgradeData.upgradeType == upgradeType);
+
                 if (upgradeNode != null)
                     skill.SetSkillUpgrade(upgradeNode.skillData);
             }
-                
         }
     }
 
@@ -98,7 +104,7 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
 
         foreach (var skill in skillManager.allSkills)
         {
-            data.skillUpgrades[skill.GetSkillType()] = skill.GetSkillUpgrade();
+            data.skillUpgrades[skill.GetSkillType()] = skill.GetUpgrade();
         }
     }
 }

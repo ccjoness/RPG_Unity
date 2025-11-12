@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public abstract class PlayerState : EntityState
 {
     protected Player player;
@@ -48,7 +46,7 @@ public abstract class PlayerState : EntityState
     {
         if (skillManager.dash.CanUseSkill() == false)
             return false;
-        
+
         if (player.wallDetected)
             return false;
 

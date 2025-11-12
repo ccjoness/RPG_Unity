@@ -41,8 +41,8 @@ public class Entity_Combat : MonoBehaviour
 
             if (element != ElementType.None)
                 statusHandler?.ApplyStatusEffect(element, attackData.effectData);
-            
-            if  (targetGotHit)
+
+            if (targetGotHit)
             {
                 OnDoingPhysicalDamage?.Invoke(physicalDamage);
                 vfx.CreateOnHitVfx(target.transform, attackData.isCrit, element);

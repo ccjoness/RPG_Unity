@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -23,34 +24,38 @@ public class Skill_Shard : Skill_Base
     [Header("Health Rewind Shard Upgrade")] 
     [SerializeField] private float savedHealthPercent;
 
-
     protected override void Awake()
     {
         base.Awake();
         currentCharges = maxCharges;
         playerHealth = GetComponentInParent<Entity_Health>();
     }
-    
+
     public void CreateShard()
     {
+        float detonateTime = GetDetonationTime();
+
         GameObject shard = Instantiate(shardPrefab, transform.position, Quaternion.identity);
         currentShard = shard.GetComponent<SkillObject_Shard>();
         currentShard.SetupShard(this);
+
         if (Unlocked(SkillUpgradeType.Shard_Teleport) || Unlocked(SkillUpgradeType.Shard_TeleportHpRewind))
             currentShard.OnExplode += ForceCooldown;
     }
 
     public void CreateRawShard(Transform target = null, bool shardsCanMove = false)
     {
-        bool canMove = shardsCanMove != false || (Unlocked(SkillUpgradeType.Shard_MoveToEnemy) ||  Unlocked(SkillUpgradeType.Shard_Multicast));
-        
+        bool canMove = shardsCanMove != false ? shardsCanMove :
+            Unlocked(SkillUpgradeType.Shard_MoveToEnemy) || Unlocked(SkillUpgradeType.Shard_Multicast);
+
+
         GameObject shard = Instantiate(shardPrefab, transform.position, Quaternion.identity);
         shard.GetComponent<SkillObject_Shard>().SetupShard(this, detonationTime, canMove, shardSpeed, target);
     }
 
     public void CreateDomainShard(Transform target)
     {
-        
+
     }
 
     public override void TryUseSkill()
@@ -66,7 +71,7 @@ public class Skill_Shard : Skill_Base
 
         if (Unlocked(SkillUpgradeType.Shard_Multicast))
             HandleShardMulticast();
-        
+
         if (Unlocked(SkillUpgradeType.Shard_Teleport))
             HandleShardTeleport();
 
@@ -88,7 +93,7 @@ public class Skill_Shard : Skill_Base
             SetSkillOnCooldown();
         }
     }
-    
+
     private void HandleShardTeleport()
     {
         if (currentShard == null)
@@ -102,22 +107,22 @@ public class Skill_Shard : Skill_Base
         }
     }
 
-    public void SwapPlayerAndShard()
+    private void SwapPlayerAndShard()
     {
         Vector3 shardPosition = currentShard.transform.position;
         Vector3 playerPosition = player.transform.position;
-        
+
         currentShard.transform.position = playerPosition;
         currentShard.Explode();
-        
+
         player.TeleportPlayer(shardPosition);
     }
-    
+
     private void HandleShardMulticast()
     {
         if (currentCharges <= 0)
             return;
-        
+
         CreateShard();
         currentShard.MoveTowardsClosestTarget(shardSpeed);
         currentCharges--;
@@ -132,10 +137,10 @@ public class Skill_Shard : Skill_Base
 
         while (currentCharges < maxCharges)
         {
-            
             yield return new WaitForSeconds(cooldown);
             currentCharges++;
         }
+
         isRecharging = false;
     }
 
@@ -143,7 +148,7 @@ public class Skill_Shard : Skill_Base
     {
         CreateShard();
         currentShard.MoveTowardsClosestTarget(shardSpeed);
-        
+
         SetSkillOnCooldown();
     }
 

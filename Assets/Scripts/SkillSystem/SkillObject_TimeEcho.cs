@@ -7,7 +7,7 @@ public class SkillObject_TimeEcho : SkillObject_Base
     [SerializeField] private GameObject onDeathVfx;
     [SerializeField] private LayerMask whatIsGround;
     private bool shouldMoveToPlayer;
-    
+
     private Transform playerTransform;
     private Skill_TimeEcho echoManager;
     private TrailRenderer wispTrail;
@@ -26,16 +26,16 @@ public class SkillObject_TimeEcho : SkillObject_Base
         maxAttacks = echoManager.GetMaxAttacks();
         playerTransform = echoManager.transform.root;
         playerHealth = echoManager.player.health;
-        skillManager = echoManager.player.skillManager;
+        skillManager = echoManager.skillManager;
         statusHandler = echoManager.player.statusHandler;
-        
+
         Invoke(nameof(HandleDeath), echoManager.GetEchoDuration());
         FlipToTarget();
-        
+
         echoHealth = GetComponent<SkillObject_Health>();
         wispTrail = GetComponentInChildren<TrailRenderer>();
         wispTrail.gameObject.SetActive(false);
-        
+
         anim.SetBool("canAttack", maxAttacks > 0);
     }
 
@@ -65,6 +65,7 @@ public class SkillObject_TimeEcho : SkillObject_Base
     private void HandleWispMovement()
     {
         transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, wispMoveSpeed * Time.deltaTime);
+
         if (Vector2.Distance(transform.position, playerTransform.position) < .5f)
         {
             HandlePlayerTouch();
@@ -99,9 +100,7 @@ public class SkillObject_TimeEcho : SkillObject_Base
         Instantiate(onDeathVfx, transform.position, Quaternion.identity);
 
         if (echoManager.ShouldBeWisp())
-        {
             TurnIntoWisp();
-        }
         else
             Destroy(gameObject);
     }

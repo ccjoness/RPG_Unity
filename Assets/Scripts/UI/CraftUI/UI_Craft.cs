@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class UI_Craft : MonoBehaviour
@@ -9,9 +8,7 @@ public class UI_Craft : MonoBehaviour
     private UI_CraftPreview craftPreviewUI;
     private UI_CraftSlot[] craftSlots;
     private UI_CraftListBtn[] craftListButtons;
-
     
-
     public void SetupCraftUI(Inventory_Storage storage)
     {
         inventory = storage.playerInventory;

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6911693712377310162}
-  - component: {fileID: -6239283940838101350}
   - component: {fileID: 3654258861937911295}
   - component: {fileID: 7091208884271361292}
   - component: {fileID: 5327287652792686906}
@@ -38,19 +37,6 @@ Transform:
   - {fileID: 4889778055401107978}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6239283940838101350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 256557467331371011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b60d48bc673a3f24dae4598224795df2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 8ae53c5cded3412385b0373bcf0d3fb5
 --- !u!61 &3654258861937911295
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -136,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b4d7702dfac1444bc774f724351be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chestId: 3b323835-3289-4222-9a02-40d89d4be393
   knockback: {x: 0, y: 2}
   canDropItems: 1
 --- !u!114 &796076910379043099

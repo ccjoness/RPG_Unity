@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -34,6 +33,7 @@ public class Player_DropManager : Entity_DropManager
             if (Random.Range(0, 100) < changeToLooseItems && equip.HasItem())
             {
                 var item = equip.GetEquipedItem();
+
                 CreateItemDrop(item.itemData);
                 inventory.UnequipItem(item);
                 inventory.RemoveFullStack(item);

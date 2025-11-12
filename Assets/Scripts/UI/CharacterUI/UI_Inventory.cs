@@ -5,10 +5,10 @@ using UnityEngine;
 public class UI_Inventory : MonoBehaviour
 {
     private Inventory_Player inventory;
-    [SerializeField] private TextMeshProUGUI goldText;
 
     [SerializeField] private UI_ItemSlotParent inventorySlotsParent;
     [SerializeField] private UI_EquipSlotParent uiEquipSlotsParent;
+    [SerializeField] private TextMeshProUGUI goldText;
 
     private void Awake()
     {
@@ -22,6 +22,7 @@ public class UI_Inventory : MonoBehaviour
     {
         if (inventory == null)
             return;
+
         UpdateUI();
     }
 

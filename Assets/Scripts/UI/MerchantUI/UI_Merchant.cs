@@ -5,6 +5,7 @@ public class UI_Merchant : MonoBehaviour
 {
     private Inventory_Player inventory;
     private Inventory_Merchant merchant;
+
     [SerializeField] private TextMeshProUGUI goldText;
     [Space]
     [SerializeField] private UI_ItemSlotParent merchantSlots;
@@ -30,10 +31,11 @@ public class UI_Merchant : MonoBehaviour
     {
         if (inventory == null)
             return;
-        
-        inventorySlots.UpdateSlots(inventory.itemList);
+
         merchantSlots.UpdateSlots(merchant.itemList);
+        inventorySlots.UpdateSlots(inventory.itemList);
         equipSlots.UpdateEquipmentSlots(inventory.equipList);
+
         goldText.text = inventory.gold.ToString("N0");
     }
 }

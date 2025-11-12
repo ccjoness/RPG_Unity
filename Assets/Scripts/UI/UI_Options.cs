@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,4 +17,6 @@ public class UI_Options : MonoBehaviour
     {
         player.health.EnableHealthBar(isOn);
     }
+    
+    public void GoToMainMenuButton() => GameManager.instance.ChangeScene("MainMenu", RespawnType.NonSpecific);
 }

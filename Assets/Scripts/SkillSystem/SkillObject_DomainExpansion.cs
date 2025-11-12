@@ -1,25 +1,24 @@
-using System;
 using UnityEngine;
 
 public class SkillObject_DomainExpansion : SkillObject_Base
 {
     private Skill_DomainExpansion domainManager;
     
-    private float expandSpeed;
+    private float expandSpeed = 2;
     private float duration;
     
-    private float slowdownPercent;
+    private float slowdownPercent = .9f;
     
     private Vector3 targetScale;
     private bool isShrinking;
 
-    public void SetupDomain(Skill_DomainExpansion _domainManager)
+    public void SetupDomain(Skill_DomainExpansion domainManager)
     {
-        this.domainManager = _domainManager;
+        this.domainManager = domainManager;
         
         duration = domainManager.GetDomainDuration();
         slowdownPercent = domainManager.GetSlowPercentage();
-        expandSpeed =  domainManager.expandSpeed;
+        expandSpeed = domainManager.expandSpeed;
         float maxSize = domainManager.maxDomainSize;
 
         targetScale = Vector3.one * maxSize;
@@ -58,8 +57,10 @@ public class SkillObject_DomainExpansion : SkillObject_Base
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Enemy enemy = collision.GetComponent<Enemy>();
+
         if (enemy == null)
             return;
+
         domainManager.AddTarget(enemy);
         enemy.SlowDownEntity(duration, slowdownPercent, true);
     }
@@ -67,6 +68,7 @@ public class SkillObject_DomainExpansion : SkillObject_Base
     private void OnTriggerExit2D(Collider2D collision)
     {
         Enemy enemy = collision.GetComponent<Enemy>();
+
         if (enemy == null)
             return;
         

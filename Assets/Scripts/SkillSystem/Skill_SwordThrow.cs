@@ -7,30 +7,29 @@ public class Skill_SwordThrow : Skill_Base
     
     [Header("Regular Sword Upgrade")]
     [SerializeField] private GameObject swordPrefab;
-    [Range(0,10)]
+    [Range(0, 10)]
     [SerializeField] private float regularThrowPower = 5;
-    
+
     [Header("Pierce Sword Upgrade")]
     [SerializeField] private GameObject pierceSwordPrefab;
     public int amountToPierce = 2;
-    [Range(0,10)]
+    [Range(0, 10)]
     [SerializeField] private float pierceThrowPower = 5;
-    
+
     [Header("Spin Sword Upgrade")]
     [SerializeField] private GameObject spinSwordPrefab;
     public int maxDistance = 5;
     public float attacksPerSecond = 6;
     public float maxSpinDuration = 3;
-    [Range(0,10)]
+    [Range(0, 10)]
     [SerializeField] private float spinThrowPower = 5;
-    
+
     [Header("Bounce Sword Upgrade")]
     [SerializeField] private GameObject bounceSwordPrefab;
     public int bounceCount = 5;
     public float bounceSpeed = 12;
-    [Range(0,10)]
+    [Range(0, 10)]
     [SerializeField] private float bounceThrowPower = 5;
-    
     
     [Header("Trajectory Prediction")]
     [SerializeField] private GameObject predictionDot;
@@ -50,7 +49,7 @@ public class Skill_SwordThrow : Skill_Base
     public override bool CanUseSkill()
     {
         UpdateThrowPower();
-        
+
         if (currentSword != null)
         {
             currentSword.GetSwordBackToPlayer();
@@ -58,17 +57,16 @@ public class Skill_SwordThrow : Skill_Base
         }
         
         return base.CanUseSkill();
-        
     }
 
     public void ThrowSword()
     {
-        GameObject _swordPrefab = GetSwordPrefab();
-        GameObject newSword = Instantiate(_swordPrefab, dots[1].position, Quaternion.identity);
-        
+        GameObject swordPrefab = GetSwordPrefab();
+        GameObject newSword = Instantiate(swordPrefab, dots[1].position, Quaternion.identity);
+
         currentSword = newSword.GetComponent<SkillObject_Sword>();
         currentSword.SetupSword(this, GetThrowPower());
-        
+
         SetSkillOnCooldown();
     }
 
@@ -76,16 +74,15 @@ public class Skill_SwordThrow : Skill_Base
     {
         if (Unlocked(SkillUpgradeType.SwordThrow))
             return swordPrefab;
-        
+
         if (Unlocked(SkillUpgradeType.SwordThrow_Pierce))
             return pierceSwordPrefab;
-        
+
         if (Unlocked(SkillUpgradeType.SwordThrow_Spin))
             return spinSwordPrefab;
-        
+
         if (Unlocked(SkillUpgradeType.SwordThrow_Bounce))
             return bounceSwordPrefab;
-        
         
         Debug.Log("No valid sword upgrade selected.");
         return null;
@@ -124,31 +121,40 @@ public class Skill_SwordThrow : Skill_Base
     private Vector2 GetTrajectoryPoint(Vector2 direction, float t)
     {
         float scaledThrowPower = currentThrowPower * 10;
+
+        // This gives us the initial velocity � the starting speed and direction of the throw.
         Vector2 initialVelocity = direction * scaledThrowPower;
-        Vector2 gravityEffect = Physics2D.gravity * (0.5f * swordGravity * (t * t));
+
+        // Gravity pulls the sword down over time. The longer it's in the air, the more it drops.
+        Vector2 gravityEffect = 0.5f * Physics2D.gravity * swordGravity * (t * t);
+
+        // We calculate how far the sword will travel after time 't',
+        // by combining the initial throw direction with the gravity pull.
         Vector2 predictedPoint = (initialVelocity * t) + gravityEffect;
+
         Vector2 playerPosition = transform.root.position;
-        
+
         return playerPosition + predictedPoint;
     }
-    
+
     public void ConfirmTrajectory(Vector2 direction) => confirmedDirection = direction;
-    
+
     public void EnableDots(bool enable)
     {
         foreach (Transform t in dots)
             t.gameObject.SetActive(enable);
     }
-    
+
     private Transform[] GenerateDots()
     {
         Transform[] newDots = new Transform[numberOfDots];
 
         for (int i = 0; i < numberOfDots; i++)
         {
-            newDots[i] = Instantiate(predictionDot, transform.position,Quaternion.identity, transform ).transform;
+            newDots[i] = Instantiate(predictionDot, transform.position, Quaternion.identity, transform).transform;
             newDots[i].gameObject.SetActive(false);
         }
+
         return newDots;
     }
 }

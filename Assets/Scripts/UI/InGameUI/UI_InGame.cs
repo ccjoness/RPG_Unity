@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,7 +10,7 @@ public class UI_InGame : MonoBehaviour
     private UI_SkillSlot[] skillSlots;
 
     [SerializeField] private RectTransform healthRect;
-    [SerializeField] private Slider healthSlider;
+    [SerializeField] private Image healthImageUI;
     [SerializeField] private TextMeshProUGUI healthText;
 
     [Header("Quick Item Slots")] 
@@ -19,7 +18,6 @@ public class UI_InGame : MonoBehaviour
     [SerializeField] private Transform quickItemOptionsParent;
     private UI_QuickItemSlotSelectOption[] quickItemOptions;
     private UI_QuickItemSlot[] quickItemSlots;
-
 
     private void Start()
     {
@@ -59,9 +57,9 @@ public class UI_InGame : MonoBehaviour
             }
             else
                 quickItemOptions[i].gameObject.SetActive(false);
-            
-            quickItemOptionsParent.position = targetRect.position + Vector3.up * yOffsetQuickItemParent;
         }
+
+        quickItemOptionsParent.position = targetRect.position + Vector3.up * yOffsetQuickItemParent;
     }
 
     public void HideQuickItemOptions() => quickItemOptionsParent.position = new Vector3(2191, -286);
@@ -70,6 +68,7 @@ public class UI_InGame : MonoBehaviour
     {
         if (skillSlots == null)
             skillSlots = GetComponentsInChildren<UI_SkillSlot>(true);
+
         foreach (var slot in skillSlots)
         {
             if (slot.skillType == skillType)
@@ -86,15 +85,9 @@ public class UI_InGame : MonoBehaviour
     {
         float currentHealth = Mathf.RoundToInt(player.health.GetCurrentHealth());
         float maxHealth = player.stats.GetMaxHealth();
-        float sizeDiff = Mathf.Abs(maxHealth - healthRect.sizeDelta.x);
 
-        if (sizeDiff > .1f)
-        {
-            float newSize = Mathf.Max(150f, maxHealth * .5f);
-            healthRect.sizeDelta = new Vector2(newSize, healthRect.sizeDelta.y);
-        }
 
         healthText.text = $"{currentHealth}/{maxHealth}";
-        healthSlider.value = player.health.GetHealthPercent();
+        healthImageUI.fillAmount = player.health.GetHealthPercent();
     }
 }
