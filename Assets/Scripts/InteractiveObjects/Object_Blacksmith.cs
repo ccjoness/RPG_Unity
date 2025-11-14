@@ -34,7 +34,5 @@ public class Object_Blacksmith : Object_NPC, IInteractable
         base.OnTriggerExit2D(other);
         ui.HideAllTooltips();
         ui.OpenStorageUI(false);
-        // ui.storageUI.gameObject.SetActive(false);
-        // ui.craftUI.gameObject.SetActive(false);
     }
 }

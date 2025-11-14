@@ -3,7 +3,7 @@ using UnityEngine;
 public class Player_SwordThrowState : PlayerState
 {
     private Camera mainCamera;
-    
+
     public Player_SwordThrowState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -11,6 +11,7 @@ public class Player_SwordThrowState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
         skillManager.swordThrow.EnableDots(true);
         
         if (mainCamera != Camera.main)
@@ -30,10 +31,13 @@ public class Player_SwordThrowState : PlayerState
         if (input.Player.BasicAttack.WasPressedThisFrame())
         {
             anim.SetBool("swordThrowPerformed", true);
+
             skillManager.swordThrow.EnableDots(false);
             skillManager.swordThrow.ConfirmTrajectory(dirToMouse);
+
+            // skill manager create sword
         }
-        
+
         if (input.Player.RangeAttack.WasReleasedThisFrame() || triggerCalled)
             stateMachine.ChangeState(player.idleState);
     }
@@ -49,7 +53,9 @@ public class Player_SwordThrowState : PlayerState
     {
         Vector2 playerPosition = player.transform.position;
         Vector2 worldMousePosition = mainCamera.ScreenToWorldPoint(player.mousePosition);
+
         Vector2 direction = worldMousePosition - playerPosition;
+
         return direction.normalized;
     }
 }

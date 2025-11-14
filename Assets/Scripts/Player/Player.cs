@@ -109,30 +109,33 @@ public class Player : Entity
         float originalAnimSpeed = anim.speed;
         Vector2 originalWallJump = wallJumpForce;
         Vector2 originalJumpAttack = jumpAttackVelocity;
-        Vector2[] originalAttackVelocity = new Vector2[attackVelocity.Length];
-        Array.Copy(attackVelocity, originalAttackVelocity, attackVelocity.Length);
-        
+        Vector2[] originalAttackVelocity = attackVelocity;
+
         float speedMultiplier = 1 - slowMultiplier;
-        
-        moveSpeed *= speedMultiplier;
-        jumpForce *= speedMultiplier;
-        anim.speed *= speedMultiplier;
-        wallJumpForce *= speedMultiplier;
-        jumpAttackVelocity *= speedMultiplier;
-        
+
+        moveSpeed = moveSpeed * speedMultiplier;
+        jumpForce = jumpForce * speedMultiplier;
+        anim.speed = anim.speed * speedMultiplier;
+        wallJumpForce = wallJumpForce * speedMultiplier;
+        jumpAttackVelocity = jumpAttackVelocity * speedMultiplier;
+
         for (int i = 0; i < attackVelocity.Length; i++)
-            attackVelocity[i] *= speedMultiplier;
-        
+        {
+            attackVelocity[i] = attackVelocity[i] * speedMultiplier;
+        }
+
         yield return new WaitForSeconds(duration);
-        
+
         moveSpeed = originalMoveSpeed;
         jumpForce = originalJumpForce;
         anim.speed = originalAnimSpeed;
         wallJumpForce = originalWallJump;
         jumpAttackVelocity = originalJumpAttack;
-        
+
         for (int i = 0; i < attackVelocity.Length; i++)
+        {
             attackVelocity[i] = originalAttackVelocity[i];
+        }
     }
 
     public override void EntityDeath()

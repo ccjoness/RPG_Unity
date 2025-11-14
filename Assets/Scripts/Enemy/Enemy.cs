@@ -81,8 +81,12 @@ public class Enemy : Entity
 
     public void TryEnterBattleState(Transform player)
     {
-        if (stateMachine.currentState == battleState || stateMachine.currentState == attackState)
+        if (stateMachine.currentState == battleState)
             return;
+
+        if (stateMachine.currentState == attackState)
+            return;
+
         this.player = player;
         stateMachine.ChangeState(battleState);
     }
@@ -115,6 +119,7 @@ public class Enemy : Entity
         Gizmos.DrawLine(playerCheck.position, new Vector3(playerCheck.position.x + (facingDir * attackDistance), playerCheck.position.y));
         Gizmos.color = Color.green;
         Gizmos.DrawLine(playerCheck.position, new Vector3(playerCheck.position.x + (facingDir * minRetreatDistance), playerCheck.position.y));
+
     }
 
     private void OnEnable()

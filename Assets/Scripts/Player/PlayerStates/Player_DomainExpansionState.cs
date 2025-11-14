@@ -8,7 +8,7 @@ public class Player_DomainExpansionState : PlayerState
 
     private bool isLevitating;
     private bool createdDomain;
-    
+
     public Player_DomainExpansionState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -16,7 +16,7 @@ public class Player_DomainExpansionState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        
+
         originalPosition = player.transform.position;
         originalGravity = rb.gravityScale;
         maxDistanceToGoUp = GetAvailableRiseDistance();

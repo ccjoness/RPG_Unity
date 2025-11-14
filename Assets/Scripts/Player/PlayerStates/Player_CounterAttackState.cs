@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Player_CounterAttackState : PlayerState
 {
     private Player_Combat combat;
@@ -23,7 +21,6 @@ public class Player_CounterAttackState : PlayerState
     public override void Update()
     {
         base.Update();
-
         player.SetVelocity(0, rb.linearVelocity.y);
 
         if (triggerCalled)

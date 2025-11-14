@@ -14,14 +14,14 @@ public class Player_WallSlideState : PlayerState
         if (input.Player.Jump.WasPressedThisFrame())
             stateMachine.ChangeState(player.wallJumpState);
 
-        if (player.wallDetected == false) 
+        if (player.wallDetected == false)
             stateMachine.ChangeState(player.fallState);
 
-        if (player.groundDetected) 
-        { 
+        if (player.groundDetected)
+        {
             stateMachine.ChangeState(player.idleState);
-            
-            if (player.facingDir != player.moveInput.x)
+
+            if(player.facingDir != player.moveInput.x)
                 player.Flip();
         }
     }
@@ -33,5 +33,4 @@ public class Player_WallSlideState : PlayerState
         else
             player.SetVelocity(player.moveInput.x, rb.linearVelocity.y * player.wallSlideSlowMultiplier);
     }
-
 }

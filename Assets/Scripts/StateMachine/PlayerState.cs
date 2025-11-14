@@ -28,10 +28,14 @@ public abstract class PlayerState : EntityState
         if (input.Player.UltimateSpell.WasPressedThisFrame() && skillManager.domainExpansion.CanUseSkill())
         {
             if (skillManager.domainExpansion.InstantDomain())
+            {
                 skillManager.domainExpansion.CreateDomain();
+            }
             else
+            {
                 stateMachine.ChangeState(player.domainExpansionState);
-            
+            }
+
             skillManager.domainExpansion.SetSkillOnCooldown();
         }
     }

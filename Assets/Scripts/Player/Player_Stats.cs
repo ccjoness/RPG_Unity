@@ -13,7 +13,10 @@ public class Player_Stats : Entity_Stats
         inventory = GetComponent<Inventory_Player>();
     }
 
-    public bool CanApplyBuffOf(string source) => !activeBuff.Contains(source);
+    public bool CanApplyBuffOf(string source)
+    {
+        return activeBuff.Contains(source) == false;
+    }
 
     public void ApplyBuff(BuffEffect_Data[] buffsToApply, float duration, string source)
     {
@@ -35,6 +38,7 @@ public class Player_Stats : Entity_Stats
         {
             GetStatByType(buff.type).RemoveModifier(source);
         }
+
         inventory.TriggerUpdateUI();
         activeBuff.Remove(source);
     }

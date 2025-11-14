@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -45,13 +44,13 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
     
     public void RemoveSkillPoints(int cost)
     {
-        skillPoints -= cost;
+        skillPoints = skillPoints - cost;
         UpdateSkillPointsUI();
     }
     
     public void AddSkillPoints(int points)
     {
-        skillPoints += points;
+        skillPoints = skillPoints + points;
         UpdateSkillPointsUI();
     }
 
@@ -74,8 +73,8 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
         {
             string skillName = node.skillData.displayName;
 
-            if (data.skillTreeUI.TryGetValue(skillName, out bool unlocked) && unlocked)
-                node.UnlockWithSaveData();
+            if (data.skillTreeUI.TryGetValue(skillName,out bool unlocked) && unlocked)
+                    node.UnlockWithSaveData();
         }
 
         foreach (var skill in skillManager.allSkills)

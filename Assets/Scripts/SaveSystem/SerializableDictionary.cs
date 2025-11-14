@@ -1,8 +1,8 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
+[System.Serializable]
 public class SerializableDictionary<Tkey, Tvalue> : Dictionary<Tkey, Tvalue>, ISerializationCallbackReceiver
 {
     [SerializeField] private List<Tkey> keys = new List<Tkey>();
@@ -34,4 +34,3 @@ public class SerializableDictionary<Tkey, Tvalue> : Dictionary<Tkey, Tvalue>, IS
         }
     }
 }
-

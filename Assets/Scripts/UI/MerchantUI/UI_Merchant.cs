@@ -36,6 +36,6 @@ public class UI_Merchant : MonoBehaviour
         inventorySlots.UpdateSlots(inventory.itemList);
         equipSlots.UpdateEquipmentSlots(inventory.equipList);
 
-        goldText.text = inventory.gold.ToString("N0");
+        goldText.text = inventory.gold.ToString("N0") + "g.";
     }
 }

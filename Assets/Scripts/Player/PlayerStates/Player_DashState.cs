@@ -15,7 +15,7 @@ public class Player_DashState : PlayerState
 
         skillManager.dash.OnStartEffect();
         player.vfx.DoImageEchoEffect(player.dashDuration);
-        
+
         dashDir = player.moveInput.x != 0 ? ((int)player.moveInput.x) : player.facingDir;
         stateTimer = player.dashDuration;
 
@@ -28,9 +28,7 @@ public class Player_DashState : PlayerState
     public override void Update()
     {
         base.Update();
-
         CancelDashIfNeeded();
-
         player.SetVelocity(player.dashSpeed * dashDir, 0);
 
         if (stateTimer < 0)
@@ -45,9 +43,9 @@ public class Player_DashState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        
+
         skillManager.dash.OnEndEffect();
-        
+
         player.health.SetCanTakeDamage(true);
         player.SetVelocity(0, 0);
         rb.gravityScale = originalGravityScale;
@@ -62,6 +60,5 @@ public class Player_DashState : PlayerState
             else
                 stateMachine.ChangeState(player.wallSlideState);
         }
-            
     }
 }

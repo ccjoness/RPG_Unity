@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Player_Health : Entity_Health
@@ -20,8 +19,6 @@ public class Player_Health : Entity_Health
     protected override void Die()
     {
         base.Die();
-        player.ui.OpenDeathScreenUI();      
-        // GameManager.instance.SetLastPlayerPosition(transform.position);
-        // GameManager.instance.RestartScene();
+        player.ui.OpenDeathScreenUI();
     }
 }

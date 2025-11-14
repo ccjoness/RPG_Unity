@@ -19,7 +19,7 @@ public class Player_WallJumpState : PlayerState
 
         if (rb.linearVelocity.y < 0)
             stateMachine.ChangeState(player.fallState);
-        
+
         if (player.wallDetected)
             stateMachine.ChangeState(player.wallSlideState);
     }

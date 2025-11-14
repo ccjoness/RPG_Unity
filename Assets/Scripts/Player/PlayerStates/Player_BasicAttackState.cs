@@ -55,12 +55,6 @@ public class Player_BasicAttackState : PlayerState
         lastTimeAttacked = Time.time;
     }
 
-    private void QueueNextAttack()
-    {
-        if (comboIndex < comboLimit)
-            comboAttackQueued = true;
-    }
-
     private void HandleStateExit()
     {
         if (comboAttackQueued)
@@ -70,6 +64,12 @@ public class Player_BasicAttackState : PlayerState
         }
         else
             stateMachine.ChangeState(player.idleState);
+    }
+
+    private void QueueNextAttack()
+    {
+        if (comboIndex < comboLimit)
+            comboAttackQueued = true;
     }
 
     private void HandleAttackVelocity()
@@ -82,13 +82,17 @@ public class Player_BasicAttackState : PlayerState
     private void ApplyAttackVelocity()
     {
         Vector2 attackVelocity = player.attackVelocity[comboIndex - 1];
+
         attackVelocityTimer = player.attackVelocityDuration;
         player.SetVelocity(attackVelocity.x * attackDir, attackVelocity.y);
     }
 
     private void ResetComboIndexIfNeeded()
     {
-        if (comboIndex > comboLimit || Time.time - lastTimeAttacked > player.comboResetTime)
+        if (Time.time > lastTimeAttacked + player.comboResetTime)
+            comboIndex = FirstComboIndex;
+
+        if (comboIndex > comboLimit)
             comboIndex = FirstComboIndex;
     }
 }

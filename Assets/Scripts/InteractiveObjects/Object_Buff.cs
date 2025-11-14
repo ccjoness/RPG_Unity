@@ -7,7 +7,6 @@ public class Object_Buff : MonoBehaviour
 
     [Header("Buff Detail")]
     [SerializeField] private BuffEffect_Data[] buffs;
-
     [SerializeField] private string buffName;
     [SerializeField] private float buffDuration = 4;
 
@@ -36,7 +35,5 @@ public class Object_Buff : MonoBehaviour
             statsToModify.ApplyBuff(buffs, buffDuration, buffName);
             Destroy(gameObject);
         }
-        
-        
     }
 }

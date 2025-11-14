@@ -3,12 +3,13 @@ using UnityEngine;
 public class UI : MonoBehaviour
 {
     public static UI instance;
-    
+
     [SerializeField] private GameObject[] uiElements;
     public bool alternativeInput { get; private set; }
     private PlayerInputSet input;
 
     #region UI Components
+
     public UI_SkillToolTip skillToolTip { get; private set; }
     public UI_ItemToolTip itemToolTip { get; private set; }
     public UI_StatToolTip statToolTip { get; private set; }
@@ -104,8 +105,8 @@ public class UI : MonoBehaviour
         skillTreeEnabled = false;
         inventoryEnabled = false;
     }
-
-    public void SwitchTo(GameObject objectToSwitchOn)
+    
+    private void SwitchTo(GameObject objectToSwitchOn)
     {
         foreach (var element in uiElements)
             element.gameObject.SetActive(false);
@@ -181,7 +182,7 @@ public class UI : MonoBehaviour
         if (openMerchantUI == false)
             HideAllTooltips();
     }
-    
+
     public void HideAllTooltips()
     {
         itemToolTip.ShowToolTip(false, null);

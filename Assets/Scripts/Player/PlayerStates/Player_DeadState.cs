@@ -9,6 +9,7 @@ public class Player_DeadState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
         input.Disable();
         rb.simulated = false;
     }

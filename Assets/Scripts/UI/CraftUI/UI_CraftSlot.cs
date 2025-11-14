@@ -9,7 +9,7 @@ public class UI_CraftSlot : MonoBehaviour
     
     [SerializeField] private Image craftItemIcon;
     [SerializeField] private TextMeshProUGUI craftItemName;
-
+    
     public void SetupButton(Item_DataSO craftData)
     {
         this.itemToCraft = craftData;
