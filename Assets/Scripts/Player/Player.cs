@@ -12,10 +12,12 @@ public class Player : Entity
     public Player_SkillManager skillManager { get; private set; }
     public Player_VFX vfx { get; private set; }
     public Entity_Health health { get; private set; }
+    public Entity_Mana mana { get; private set; }
     public Entity_StatusHandler statusHandler { get; private set; }
     public Player_Combat combat { get; private set; }
     public Inventory_Player inventory { get; private set; }
     public Player_Stats stats { get; private set; }
+    public Player_QuestManager questManager { get; private set; }
     
     #region State Variables
 
@@ -68,12 +70,14 @@ public class Player : Entity
         ui = FindAnyObjectByType<UI>();
         vfx = GetComponent<Player_VFX>();
         health = GetComponent<Entity_Health>();
+        mana = GetComponent<Entity_Mana>();
         skillManager = GetComponent<Player_SkillManager>();
         statusHandler = GetComponent<Entity_StatusHandler>();
         combat = GetComponent<Player_Combat>();
         inventory = GetComponent<Inventory_Player>();
         stats = GetComponent<Player_Stats>();
-
+        questManager = GetComponent<Player_QuestManager>();
+         
         input = new PlayerInputSet();
         ui.SetupControlsUI(input);
 

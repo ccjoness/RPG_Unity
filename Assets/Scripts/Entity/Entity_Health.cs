@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class Entity_Health : MonoBehaviour, IDamageable
 {
@@ -38,12 +37,16 @@ public class Entity_Health : MonoBehaviour, IDamageable
         entity = GetComponent<Entity>();
         entityVfx = GetComponent<Entity_VFX>();
         entityStats = GetComponent<Entity_Stats>();
-        healthBar = GetComponentInChildren<Slider>();
-        dropManager = GetComponent<Entity_DropManager>();
         healthBarUI = GetComponentInChildren<UI_MiniHealthBar>();
-        
-         
+        healthBar = healthBarUI.GetComponentInChildren<Slider>();
+        dropManager = GetComponent<Entity_DropManager>();
+
         SetupHealth();
+    }
+
+    protected virtual void Start()
+    {
+
     }
 
     private void SetupHealth()
@@ -93,7 +96,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
         if(entityStats == null)
             return false;
         else
-            return Random.Range(0, 100) < entityStats.GetEvasion();
+            return UnityEngine.Random.Range(0, 100) < entityStats.GetEvasion();
     }
     
     private void RegenerateHealth()
@@ -147,24 +150,24 @@ public class Entity_Health : MonoBehaviour, IDamageable
 
     private void UpdateHealthBar()
     {
-        if (healthBar == null && healthBarUI.gameObject.activeSelf == false)
+        if (healthBar == null && healthBar.transform.parent.gameObject.activeSelf == false)
             return;
 
         healthBar.value = currentHealth / entityStats.GetMaxHealth();
     }
-    
-    public void EnableHealthBar(bool enable) => healthBarUI?.gameObject.SetActive(enable);
+
+    public void EnableHealthBar(bool enable) => healthBar?.transform.parent.gameObject.SetActive(enable);
 
 
     private void TakeKnockback(Transform damageDealer, float finalDamage)
     {
-        Vector2 knockback = CalculateKnockback(damageDealer, finalDamage);
+        Vector2 knockback = CalculateKnockback(finalDamage, damageDealer);
         float duration = CalculateDuration(finalDamage);
 
         entity?.ReceiveKnockback(knockback, duration);
     }
-
-    private Vector2 CalculateKnockback(Transform damageDealer, float damage)
+    
+    private Vector2 CalculateKnockback(float damage, Transform damageDealer)
     {
         int direction = transform.position.x > damageDealer.position.x ? 1 : -1;
 

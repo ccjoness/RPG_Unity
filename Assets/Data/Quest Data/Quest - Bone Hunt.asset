@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6f4f47a9647d84581162c41c5a7c60, type: 3}
+  m_Name: Quest - Bone Hunt
+  m_EditorClassIdentifier: 
+  questSaveId: a9b4707a868042d44afe356aa44819fa
+  questName: Bone Hunt
+  description: This used to be a nice place, just pickaxes and ale. Now it's bones
+    and bother. I'd take care of 'em myself, but me knees aren't what they used to
+    be! Go knock a few of them back into the dirt will ye?
+  questGoal: '- Kill 2 Skeletons'
+  questTargetId: enemy_skeleton
+  requiredAmount: 2
+  rewardType: 0
+  rewardItems:
+  - itemData: {fileID: 11400000, guid: 1fca370a406e9a7499ab063254db9087, type: 2}
+    stackSize: 1
+    itemEffect: {fileID: 0}
+  - itemData: {fileID: 11400000, guid: 8cdfa043d2d858c498124b7e9fe14cd7, type: 2}
+    stackSize: 2
+    itemEffect: {fileID: 0}
+  - itemData: {fileID: 11400000, guid: 0fa5e3ed421379948bdc78bf24b5e141, type: 2}
+    stackSize: 1
+    itemEffect: {fileID: 0}
+  goldReward: 20

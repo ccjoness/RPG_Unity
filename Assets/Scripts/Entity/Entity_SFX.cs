@@ -23,31 +23,31 @@ public class Entity_SFX : MonoBehaviour
 
     public void PlayJumpSFX()
     {
-        Debug.Log("Playing jump sfx");
+        // Debug.Log("Playing jump sfx");
         AudioManager.instance.PlaySFX(jumpSFX, audioSource, soundDistance);
     }
 
     public void PlayLandSFX()
     {
-        Debug.Log("Playing land sfx");
+        // Debug.Log("Playing land sfx");
         AudioManager.instance.PlaySFX(landSFX, audioSource, soundDistance);
     }
 
     public void PlayDashSFX()
     {
-        Debug.Log("Playing dash sfx");
+        // Debug.Log("Playing dash sfx");
         AudioManager.instance.PlaySFX(dashSFX, audioSource, soundDistance);
     }
 
     public void PlayStepSFX()
     {
-        Debug.Log("Playing step sfx");
+        // Debug.Log("Playing step sfx");
         AudioManager.instance.PlaySFX(walkSFX, audioSource, soundDistance);
     }
 
     public void PlayAttackHit()
     {
-        Debug.Log("Playing hit sfx");
+        // Debug.Log("Playing hit sfx");
         AudioManager.instance.PlaySFX(attackHit, audioSource, soundDistance);
     }
 

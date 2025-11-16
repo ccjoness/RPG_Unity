@@ -147,6 +147,15 @@ public class Entity_Stats : MonoBehaviour
 
         return finalMaxHealth;
     }
+    
+    public float GetMaxMana()
+    {
+        float baseMaxMana = resources.maxMana.GetValue();
+        float bonusMaxMana = major.intelligence.GetValue() * 5;
+        float finalMaxMana = baseMaxMana + bonusMaxMana;
+
+        return finalMaxMana;
+    }
 
     public Stat GetStatByType(StatType type)
     {
@@ -194,6 +203,9 @@ public class Entity_Stats : MonoBehaviour
 
         resources.maxHealth.SetBaseValue(defaultStatSetup.maxHealth);
         resources.healthRegen.SetBaseValue(defaultStatSetup.healthRegen);
+        
+        resources.maxMana.SetBaseValue(defaultStatSetup.maxMana);
+        resources.manaRegen.SetBaseValue(defaultStatSetup.manaRegen);
 
         major.strength.SetBaseValue(defaultStatSetup.strength);
         major.agility.SetBaseValue(defaultStatSetup.agility);

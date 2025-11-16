@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Default Stat Setup - Player
   m_EditorClassIdentifier: 
   maxHealth: 100
-  healthRegen: 0
+  healthRegen: 1
+  maxMana: 100
+  manaRegen: 1
   attackSpeed: 1
   damage: 10
   critChance: 0

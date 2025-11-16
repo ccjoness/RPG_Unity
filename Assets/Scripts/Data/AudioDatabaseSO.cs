@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[CreateAssetMenu(menuName = "Game Audio/Audio Database")]
+[CreateAssetMenu(menuName = "Audio/Audio Database")]
 public class AudioDatabaseSO : ScriptableObject
 {
     public List<AudioClipData> player;

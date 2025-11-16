@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   healthRegen: 0
+  maxMana: 0
+  manaRegen: 0
   attackSpeed: 1
   damage: 10
   critChance: 0

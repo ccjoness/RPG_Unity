@@ -9,9 +9,15 @@ public class UI_InGame : MonoBehaviour
     private Inventory_Player inventory;
     private UI_SkillSlot[] skillSlots;
 
+    [Header("Health Bar")]
     [SerializeField] private RectTransform healthRect;
     [SerializeField] private Image healthImageUI;
     [SerializeField] private TextMeshProUGUI healthText;
+    
+    [Header("Mana Bar")]
+    [SerializeField] private RectTransform manaRect;
+    [SerializeField] private Image manaImageUI;
+    [SerializeField] private TextMeshProUGUI manaText;
 
     [Header("Quick Item Slots")] 
     [SerializeField] private float yOffsetQuickItemParent = 150;
@@ -25,6 +31,7 @@ public class UI_InGame : MonoBehaviour
 
         player = FindFirstObjectByType<Player>();
         player.health.OnHealthUpdate += UpdateHealthBar;
+        player.mana.OnManaUpdate += UpdateManaBar;
 
         inventory = player.inventory;
         inventory.OnInventoryChange += UpdateQuickSlotsUI;
@@ -89,5 +96,15 @@ public class UI_InGame : MonoBehaviour
 
         healthText.text = $"{currentHealth}/{maxHealth}";
         healthImageUI.fillAmount = player.health.GetHealthPercent();
+    }
+    
+    private void UpdateManaBar()
+    {
+        float currentMana = Mathf.RoundToInt(player.mana.GetCurrentMana());
+        float maxMana = player.stats.GetMaxMana();
+
+
+        manaText.text = $"{currentMana}/{maxMana}";
+        manaImageUI.fillAmount = player.mana.GetManaPercent();
     }
 }

@@ -7,7 +7,6 @@ public class Stat_ResourceGroup
     public Stat maxHealth;
     public Stat healthRegen;
 
-    // max mana
-    // mana regen
-    // stamina
+    public Stat maxMana;
+    public Stat manaRegen;
 }

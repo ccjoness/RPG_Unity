@@ -1,11 +1,16 @@
 using System;
 using UnityEngine;
 
-public class Object_NPC : MonoBehaviour
+public class Object_NPC : MonoBehaviour, IInteractable
 {
     protected Transform player;
     protected UI ui;
+    protected Player_QuestManager questManager;
 
+    [Header("Quest Info")]
+    [SerializeField] private string npcTargetQuestId;
+    [SerializeField] private RewardType rewardNpc;
+    [Space]
     [SerializeField] private Transform npc;
     [SerializeField] private GameObject interactToolTip;
     private bool facingRight = true;
@@ -22,7 +27,12 @@ public class Object_NPC : MonoBehaviour
         startPosition = interactToolTip.transform.position;
         interactToolTip.SetActive(false);
     }
-
+    
+    protected virtual void Start()
+    {
+        questManager = Player.instance.questManager;
+    }
+    
     protected virtual void Update()
     {
         HandleNpcFlip();
@@ -63,5 +73,11 @@ public class Object_NPC : MonoBehaviour
     protected virtual void OnTriggerExit2D(Collider2D other)
     {
         interactToolTip.SetActive(false);
+    }
+
+    public virtual void Interact()
+    {
+        questManager.AddProgress(npcTargetQuestId);
+        questManager.TryGiveRewardFrom(rewardNpc);
     }
 }

@@ -22,6 +22,8 @@ public class Inventory_Item
         itemEffect = itemData.itemEffect;
         buyPrice = itemData.itemPrice;
         sellPrice = itemData.itemPrice * .35f;
+        if (sellPrice < 1)
+            sellPrice = 1;
 
         modifiers = EquipmentData()?.modifiers;
         itemId = $"{itemData.itemName} - {Guid.NewGuid()}";

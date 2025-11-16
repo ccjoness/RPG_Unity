@@ -4,6 +4,10 @@ using UnityEngine.PlayerLoop;
 
 public class Object_Merchant : Object_NPC, IInteractable
 {
+    [Header("Quest & Dialogue")]
+    [SerializeField] private QuestDataSO[] quests;
+    
+    
     private Inventory_Player inventory;
     private Inventory_Merchant merchant;
     
@@ -21,10 +25,12 @@ public class Object_Merchant : Object_NPC, IInteractable
             merchant.FillShopList();
     }
 
-    public void Interact()
+    public override void Interact()
     {
-        ui.merchantUI.SetupMerchantUI(merchant, inventory);
-        ui.OpenMerchantUI(true);
+        base.Interact();
+        ui.OpenQuestUI(quests);
+        // ui.merchantUI.SetupMerchantUI(merchant, inventory);
+        // ui.OpenMerchantUI(true);
     }
     
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -39,5 +45,6 @@ public class Object_Merchant : Object_NPC, IInteractable
         base.OnTriggerExit2D(other);
         ui.HideAllTooltips();
         ui.OpenMerchantUI(false);
+        ui.CloseQuestUI();
     }
 }

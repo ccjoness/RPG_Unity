@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour, ISaveable
             player.TeleportPlayer(position);
     }
     
-    private UI_FadeScreen FindFadeScreenUI() => UI.instance != null ? UI.instance.fadeScreenUI : FindFirstObjectByType<UI_FadeScreen>();
+    private UI_FadeScreen FindFadeScreenUI() => UI.instance != null ? UI.instance.fadeScreenUI : FindFirstObjectByType<UI_FadeScreen>(FindObjectsInactive.Include);
     
 
     private Vector3 GetNewPlayerPosition(RespawnType type)
