@@ -4,16 +4,24 @@ using UnityEngine;
 public class DialogueLineSO : ScriptableObject
 {
     [Header("Dialogue Info")]
-    public string dialogueGroup;
+    public string dialogueGroupName;
     public DialogueSpeakerSO speaker;
     
     [Header("Text Options")]
     [TextArea] public string[] textLine;
-    
+
+    [Header("Choices info")]
+    [TextArea] public string playerChoiceAnswer;
+    public DialogueLineSO[] choiceLines;
+
     [Header("Dialogue Action")]
+    [TextArea] public string actionLine;
     public DialogueActionType actionType;
-    
-    
-    
-    public string GetRandomLine() => textLine[Random.Range(0, textLine.Length)];
+
+    public string GetFirstLine() => textLine[0];
+
+    public string GetRandomLine()
+    {
+        return textLine[Random.Range(0, textLine.Length)];
+    }
 }

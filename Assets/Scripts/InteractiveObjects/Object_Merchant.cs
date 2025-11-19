@@ -1,18 +1,14 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
 
 public class Object_Merchant : Object_NPC, IInteractable
 {
     [Header("Quest & Dialogue")]
     [SerializeField] private DialogueLineSO firstDialogueLine;
     [SerializeField] private QuestDataSO[] quests;
-    
-    
+
     private Inventory_Player inventory;
     private Inventory_Merchant merchant;
-    
-    
+
     protected override void Awake()
     {
         base.Awake();
@@ -22,6 +18,7 @@ public class Object_Merchant : Object_NPC, IInteractable
     protected override void Update()
     {
         base.Update();
+
         if (Input.GetKeyDown(KeyCode.Z))
             merchant.FillShopList();
     }
@@ -29,12 +26,14 @@ public class Object_Merchant : Object_NPC, IInteractable
     public override void Interact()
     {
         base.Interact();
-        ui.OpenDialogueUI(firstDialogueLine);
-        // ui.OpenQuestUI(quests);
-        // ui.merchantUI.SetupMerchantUI(merchant, inventory);
-        // ui.OpenMerchantUI(true);
+        
+        ui.merchantUI.SetupMerchantUI(merchant, inventory);
+        ui.OpenDialogueUI(firstDialogueLine, new DialogueNpcData(rewardNpc, quests));
+
+        //ui.OpenQuestUI(quests);
+        //ui.OpenMerchantUI(true);
     }
-    
+
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
@@ -42,11 +41,11 @@ public class Object_Merchant : Object_NPC, IInteractable
         merchant.SetInventory(inventory);
     }
 
-    protected override void OnTriggerExit2D(Collider2D other)
+    protected override void OnTriggerExit2D(Collider2D collision)
     {
-        base.OnTriggerExit2D(other);
+        base.OnTriggerExit2D(collision);
         ui.HideAllTooltips();
         ui.OpenMerchantUI(false);
-        ui.CloseQuestUI();
     }
+
 }

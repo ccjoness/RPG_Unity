@@ -1,38 +1,59 @@
-using System;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_Dialogue : MonoBehaviour
 {
     private UI ui;
-    
+    private DialogueNpcData npcData;
+    private Player_QuestManager questManager;
+
     [SerializeField] private Image speakerPortrait;
     [SerializeField] private TextMeshProUGUI speakerName;
     [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] private TextMeshProUGUI dialogueChoices;
+    [SerializeField] private TextMeshProUGUI[] dialogueChoicesText;
+
     [Space]
-    [SerializeField] private float typeSpeed = .1f;
+    [SerializeField] private float textSpeed = .1f;
     private string fullTextToShow;
     private Coroutine typeTextCo;
-    
+
     private DialogueLineSO currentLine;
+    private DialogueLineSO[] currentChoices;
+    private DialogueLineSO selectedChoice;
+    private int selectedChoiceIndex;
+
+    private bool waitingToConfirm;
+    private bool canInteract;
 
     private void Awake()
     {
         ui = GetComponentInParent<UI>();
+        questManager = Player.instance.questManager;
     }
+
+    public void SetupNpcData(DialogueNpcData npcData) => this.npcData = npcData;
 
     public void PlayDialogueLine(DialogueLineSO line)
     {
         currentLine = line;
-        
+        currentChoices = line.choiceLines;
+        canInteract = false;
+        selectedChoice = null;
+        selectedChoiceIndex = 0;
+
+        HideAllChoices();
+
         speakerPortrait.sprite = line.speaker.speakerPortrait;
         speakerName.text = line.speaker.speakerName;
-        
-        fullTextToShow = line.GetRandomLine();
+
+        fullTextToShow = line.actionType == DialogueActionType.None || line.actionType == DialogueActionType.PlayerMakeChoice ?
+            line.GetRandomLine() : line.actionLine;
+
         typeTextCo = StartCoroutine(TypeTextCo(fullTextToShow));
+        StartCoroutine(EnableInteractionCo());
     }
 
     private void HandleNextAction()
@@ -43,35 +64,141 @@ public class UI_Dialogue : MonoBehaviour
                 ui.SwitchToInGameUI();
                 ui.OpenMerchantUI(true);
                 break;
+            case DialogueActionType.PlayerMakeChoice:
+                if (selectedChoice == null)
+                {
+                    ShowChoices();
+                }
+                else
+                {
+                    DialogueLineSO selectedChoice = currentChoices[selectedChoiceIndex];
+                    PlayDialogueLine(selectedChoice);
+                }
+                break;
+            case DialogueActionType.OpenQuest:
+                ui.SwitchToInGameUI();
+                ui.OpenQuestUI(npcData.quests);
+                break;
+            case DialogueActionType.GetQuestReward:
+                ui.SwitchToInGameUI();
+                questManager.TryGetRewardFrom(npcData.npcRewardType);
+                break;
+            case DialogueActionType.OpenCraft:
+                ui.SwitchToInGameUI();
+                ui.OpenCraftUI(true);
+                break;
+            case DialogueActionType.OpenStorage:
+                ui.SwitchToInGameUI();
+                ui.OpenStorageUI(true);
+                break;
+            case DialogueActionType.CloseDialogue:
+                ui.SwitchToInGameUI();
+                break;
         }
     }
-    
+
     public void DialogueInteraction()
     {
-        if (typeTextCo != null && dialogueText.text.Length > 5)
+        if (canInteract == false)
+            return;
+
+        if (typeTextCo != null)
         {
             CompleteTyping();
+
+            if (currentLine.actionType != DialogueActionType.PlayerMakeChoice)
+                waitingToConfirm = true;
+            else
+                HandleNextAction();
+
             return;
         }
-        
+
+        if (waitingToConfirm || selectedChoice != null)
+        {
+            waitingToConfirm = false;
+            HandleNextAction();
+        }
     }
-    
+
     private void CompleteTyping()
-    { 
+    {
         if (typeTextCo != null)
         {
             StopCoroutine(typeTextCo);
             dialogueText.text = fullTextToShow;
+            typeTextCo = null;
         }
     }
-    
+
+    private void ShowChoices()
+    {
+        for (int i = 0; i < dialogueChoicesText.Length; i++)
+        {
+            if (i < currentChoices.Length)
+            {
+                DialogueLineSO choice = currentChoices[i];
+                string choiceText = $"{i + 1}) {choice.playerChoiceAnswer}";
+
+                dialogueChoicesText[i].gameObject.SetActive(true);
+                dialogueChoicesText[i].text = selectedChoiceIndex == i ? $"<color=yellow>{choiceText}" : choiceText;
+
+
+                if (choice.actionType == DialogueActionType.GetQuestReward && questManager.HasCompletedQuest() == false)
+                    dialogueChoicesText[i].gameObject.SetActive(false);
+            }
+            else
+            {
+                dialogueChoicesText[i].gameObject.SetActive(false);
+            }
+        }
+
+        selectedChoice = currentChoices[selectedChoiceIndex];
+    }
+
+    private void HideAllChoices()
+    {
+        foreach (var obj in dialogueChoicesText)
+            obj.gameObject.SetActive(false);
+    }
+
+    public void NavigateChoice(int direction)
+    {
+        int tryIndex = Mathf.Clamp(selectedChoiceIndex + direction, 0, currentChoices.Length - 1);
+        if (currentChoices == null || currentChoices.Length <= 1 || dialogueChoicesText[tryIndex].gameObject.activeInHierarchy == false)
+            return;
+        
+        selectedChoiceIndex = tryIndex;
+        ShowChoices();
+    }
+
     private IEnumerator TypeTextCo(string text)
     {
         dialogueText.text = "";
+
         foreach (char letter in text)
         {
             dialogueText.text += letter;
-            yield return new WaitForSeconds(typeSpeed);
+            yield return new WaitForSeconds(textSpeed);
         }
+
+        if (currentLine.actionType != DialogueActionType.PlayerMakeChoice)
+        {
+            waitingToConfirm = true;
+        }
+        else
+        {
+            yield return new WaitForSeconds(.2f);
+            selectedChoice = null;
+            HandleNextAction();
+        }
+
+        typeTextCo = null;
+    }
+
+    private IEnumerator EnableInteractionCo()
+    {
+        yield return null;
+        canInteract = true;
     }
 }

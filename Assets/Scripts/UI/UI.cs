@@ -25,6 +25,7 @@ public class UI : MonoBehaviour
     public UI_FadeScreen fadeScreenUI { get; private set; }
     public UI_Quest questUI { get; private set; }
     public UI_Dialogue dialogueUI { get; private set; }
+
     #endregion
 
     private bool skillTreeEnabled;
@@ -89,6 +90,14 @@ public class UI : MonoBehaviour
         {
             if (dialogueUI.gameObject.activeInHierarchy)
                 dialogueUI.DialogueInteraction();
+        };
+        
+        input.UI.DialogueNavigation.performed += ctx =>
+        {
+            int direction = Mathf.RoundToInt(ctx.ReadValue<float>());
+            
+            if (dialogueUI.gameObject.activeInHierarchy)
+                dialogueUI.NavigateChoice(direction);
         };
     }
 
@@ -171,19 +180,21 @@ public class UI : MonoBehaviour
         StopPlayerControlsIfNeeded();
     }
     
-    public void OpenDialogueUI(DialogueLineSO firstLine)
+    public void OpenDialogueUI(DialogueLineSO firstLine, DialogueNpcData npcData)
     {
         StopPlayerControls(true);
         HideAllTooltips();
-        
+
         dialogueUI.gameObject.SetActive(true);
+        dialogueUI.SetupNpcData(npcData);
         dialogueUI.PlayDialogueLine(firstLine);
     }
-    
+
     public void OpenQuestUI(QuestDataSO[] questsToShow)
     {
         StopPlayerControls(true);
         HideAllTooltips();
+
         questUI.gameObject.SetActive(true);
         questUI.SetupQuestUI(questsToShow);
     }
@@ -198,6 +209,18 @@ public class UI : MonoBehaviour
         if (openStorageUI == false)
         {
             craftUI.gameObject.SetActive(false);
+            HideAllTooltips();
+        }
+    }
+
+    public void OpenCraftUI(bool openStorageUI)
+    {
+        craftUI.gameObject.SetActive(openStorageUI);
+        StopPlayerControls(openStorageUI);
+
+        if (openStorageUI == false)
+        {
+            storageUI.gameObject.SetActive(false);
             HideAllTooltips();
         }
     }

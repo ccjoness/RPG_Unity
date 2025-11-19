@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9663c857200fbdd47946a5d77529f187, type: 3}
+  m_Name: Line - BlacksmithJoe_1
+  m_EditorClassIdentifier: 
+  dialogueGroupName: blacksmith_joe
+  speaker: {fileID: 11400000, guid: 0038fb9ba1765ce45a7a42524f318634, type: 2}
+  textLine:
+  - "Ah, another wanderer darkening my doorstep. Come in, come in. If your blade\u2019s
+    dull or your armor\u2019s cracked, I can fix it, for the right price, of course."
+  - "Ho! Welcome to my forge! Mind the sparks. If you need steel that won\u2019t
+    fail you, you\u2019ve come to the right hammer!"
+  - "Greetings, traveler. Few seek my forge without purpose. Show me your weapon\u2026
+    and I shall show you what true craftsmanship can do."
+  - "Well now, look who the wind dragged in. I\u2019ve shod horses and armed heroes
+    for fifty years, tell me what you need, and I\u2019ll make it last longer than
+    you will."
+  playerChoiceAnswer: 
+  choiceLines:
+  - {fileID: 11400000, guid: cae42ed74d13d7347acd3e28bf0cc001, type: 2}
+  - {fileID: 11400000, guid: 4465329308149844e8be5de1846247e4, type: 2}
+  - {fileID: 11400000, guid: cf51c00c1b2dd8f4a8da5191a1c5ccb5, type: 2}
+  actionLine: 
+  actionType: 5

@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9663c857200fbdd47946a5d77529f187, type: 3}
-  m_Name: Line - MerchantBob_1
+  m_Name: Line - MerchantBob_2 3
   m_EditorClassIdentifier: 
-  dialogueGroup: Merchant Bob
+  dialogueGroupName: merchant_bob
   speaker: {fileID: 11400000, guid: 639b770f9a4c18d4da8c05fbd0b35b96, type: 2}
   textLine:
-  - If it takes longer than a pint, I'm busy.
-  - "Ah, good to see an old friend - though yer barley outta diapers. What can I
-    get ye?\t"
-  - Joe took me tools again. I swear, I'll bury that bastard...
-  - If you break it, you buy it. If I break it... well, that's tradition.
-  actionType: 0
+  - 
+  playerChoiceAnswer: I have to go.
+  choiceLines: []
+  actionLine: If ye aint got nothin' to say, be away!
+  actionType: 6
