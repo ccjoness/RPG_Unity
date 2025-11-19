@@ -29,7 +29,7 @@ public class UI_InGame : MonoBehaviour
     {
         quickItemSlots = GetComponentsInChildren<UI_QuickItemSlot>();
 
-        player = FindFirstObjectByType<Player>();
+        player = Player.instance;
         player.health.OnHealthUpdate += UpdateHealthBar;
         player.mana.OnManaUpdate += UpdateManaBar;
 
@@ -75,7 +75,6 @@ public class UI_InGame : MonoBehaviour
     {
         if (skillSlots == null)
             skillSlots = GetComponentsInChildren<UI_SkillSlot>(true);
-
         foreach (var slot in skillSlots)
         {
             if (slot.skillType == skillType)

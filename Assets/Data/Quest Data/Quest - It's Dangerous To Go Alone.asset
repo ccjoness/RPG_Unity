@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Quest - It's Dangerous To Go Alone
   m_EditorClassIdentifier: 
   questSaveId: cf32a929bdbee47468d25f3814f627ba
+  questType: 0
   questName: It's Dangerous To Go Alone
   description: Since you are just starting your adventure, you'll need somethin'
     to train with. I bought a sword off some wierd fella - looked half mad, but the
@@ -21,7 +22,8 @@ MonoBehaviour:
   questGoal: Talk to Blacksmith Joe.
   questTargetId: blacksmith_joe
   requiredAmount: 1
-  rewardType: 1
+  itemToDeliver: {fileID: 0}
+  rewardType: 0
   rewardItems:
   - itemData: {fileID: 11400000, guid: 9fbafe4a027a0c347a7617ac7571dbcf, type: 2}
     stackSize: 1

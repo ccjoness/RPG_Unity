@@ -1,7 +1,8 @@
-using UnityEngine;
+using System;
 
-[System.Serializable]
-public class QuestData
+
+[Serializable]
+public class QuestData 
 {
     public QuestDataSO questDataSo;
     public int currentAmount;
@@ -12,11 +13,11 @@ public class QuestData
         currentAmount += amount;
         canGetReward = CanGetReward();
     }
-    
+
     public bool CanGetReward() => currentAmount >= questDataSo.requiredAmount;
-    
-    public QuestData(QuestDataSO questDataSo)
+
+    public QuestData(QuestDataSO questSo)
     {
-        this.questDataSo = questDataSo;
+        this.questDataSo = questSo;
     }
 }

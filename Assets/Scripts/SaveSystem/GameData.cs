@@ -23,6 +23,9 @@ public class GameData
     
     public SerializableDictionary<string, bool> chests; // chest id | is opened
     
+    public SerializableDictionary<string, bool> completedQuests; // quest id | is completed
+    public SerializableDictionary<string, int> activeQuests; // quest id | current progress
+    
     public string portalDestinationSceneName;
     public bool returningFromTown;
 
@@ -44,5 +47,8 @@ public class GameData
 
         unlockedCheckpoints = new SerializableDictionary<string, bool>();
         inScenePortals = new SerializableDictionary<string, Vector3>();
+        
+        completedQuests = new SerializableDictionary<string, bool>();
+        activeQuests = new SerializableDictionary<string, int>();
     }
 }

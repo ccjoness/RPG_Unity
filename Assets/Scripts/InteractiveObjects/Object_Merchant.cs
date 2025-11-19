@@ -5,6 +5,7 @@ using UnityEngine.PlayerLoop;
 public class Object_Merchant : Object_NPC, IInteractable
 {
     [Header("Quest & Dialogue")]
+    [SerializeField] private DialogueLineSO firstDialogueLine;
     [SerializeField] private QuestDataSO[] quests;
     
     
@@ -28,7 +29,8 @@ public class Object_Merchant : Object_NPC, IInteractable
     public override void Interact()
     {
         base.Interact();
-        ui.OpenQuestUI(quests);
+        ui.OpenDialogueUI(firstDialogueLine);
+        // ui.OpenQuestUI(quests);
         // ui.merchantUI.SetupMerchantUI(merchant, inventory);
         // ui.OpenMerchantUI(true);
     }

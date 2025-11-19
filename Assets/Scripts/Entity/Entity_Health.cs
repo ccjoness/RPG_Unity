@@ -13,7 +13,6 @@ public class Entity_Health : MonoBehaviour, IDamageable
     private Entity_Stats entityStats;
     private Entity_DropManager dropManager;
 
-    private UI_MiniHealthBar healthBarUI;
     private bool miniHealthBarActive;
     [SerializeField] protected float currentHealth;
     
@@ -37,8 +36,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
         entity = GetComponent<Entity>();
         entityVfx = GetComponent<Entity_VFX>();
         entityStats = GetComponent<Entity_Stats>();
-        healthBarUI = GetComponentInChildren<UI_MiniHealthBar>();
-        healthBar = healthBarUI.GetComponentInChildren<Slider>();
+        healthBar = GetComponentInChildren<Slider>();
         dropManager = GetComponent<Entity_DropManager>();
 
         SetupHealth();

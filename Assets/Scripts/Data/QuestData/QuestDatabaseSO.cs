@@ -6,9 +6,12 @@ using UnityEngine;
 public class QuestDatabaseSO : ScriptableObject
 {
     public QuestDataSO[] allQuests;
-    
-    public QuestDataSO GetQuestById(string id) => allQuests.FirstOrDefault(q => q.questSaveId == id);
-    
+
+    public QuestDataSO GetQuestById(string id)
+    {
+        return allQuests.FirstOrDefault(q => q != null && q.questSaveId == id);
+    }
+
 #if UNITY_EDITOR
     [ContextMenu("Auto-fill with all QuestDataSO")]
     public void CollectItemsData()

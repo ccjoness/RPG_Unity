@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6f4f47a9647d84581162c41c5a7c60, type: 3}
+  m_Name: Quest - Deliver Health Potions
+  m_EditorClassIdentifier: 
+  questSaveId: b59c23bbe6c7bcc46b37d28f001e0134
+  questType: 2
+  questName: Deliver Health Potions
+  description: Bring me health potions.
+  questGoal: '- Deliver health potions to Bob: '
+  questTargetId: 
+  requiredAmount: 4
+  itemToDeliver: {fileID: 11400000, guid: 2c0feb5812334e0419237346bc70f772, type: 2}
+  rewardType: 0
+  rewardItems:
+  - itemData: {fileID: 11400000, guid: 89b1978f798bcef45bc8601457cd572c, type: 2}
+    stackSize: 1
+    itemEffect: {fileID: 0}
+  goldReward: 10

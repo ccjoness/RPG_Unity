@@ -5,6 +5,7 @@ public class UI_QuestRewardSlot : UI_ItemSlot
 {
     public override void OnPointerDown(PointerEventData eventData)
     {
+        
     }
 
     public override void OnPointerEnter(PointerEventData eventData)

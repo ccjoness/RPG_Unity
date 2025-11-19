@@ -41,13 +41,11 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
     }
 
     public bool EnoughSkillPoints(int cost) => skillPoints >= cost;
-    
     public void RemoveSkillPoints(int cost)
     {
         skillPoints = skillPoints - cost;
         UpdateSkillPointsUI();
     }
-    
     public void AddSkillPoints(int points)
     {
         skillPoints = skillPoints + points;

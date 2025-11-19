@@ -363,15 +363,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SkillTreeUI",
-                    "type": "Button",
-                    "id": "b5685ef7-e4de-495f-8d33-c7129d90e1f0",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "InventoryUI",
                     "type": "Button",
                     "id": "3ae053c8-92ba-4de1-a2aa-4962f732a21b",
@@ -381,9 +372,27 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SkillTreeUI",
+                    "type": "Button",
+                    "id": "b5685ef7-e4de-495f-8d33-c7129d90e1f0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "AlternativeInput",
                     "type": "Button",
                     "id": "e999f7c5-24e2-4fdb-9097-f31249661f5a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DialogueInteraction",
+                    "type": "Button",
+                    "id": "528cc854-a061-4f2c-8a4b-0690019417d0",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -421,6 +430,17 @@
                     "processors": "",
                     "groups": ";Keyboard & Mouse",
                     "action": "OptionsUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ebc12764-fd91-42e5-ba63-7a5ddde422be",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "DialogueInteraction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
