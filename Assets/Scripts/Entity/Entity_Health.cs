@@ -64,7 +64,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
 
         if (AttackEvaded())
         {
-            Debug.Log($"{gameObject.name} evaded the attack!");
+            // Debug.Log($"{gameObject.name} evaded the attack!");
             return false;
         }
 

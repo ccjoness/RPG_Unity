@@ -17,14 +17,22 @@ public class Enemy_BattleState : EnemyState
         base.Enter();
         UpdateBattleTimer();
 
-        if(player == null)
+        if (player == null)
             player = enemy.GetPlayerReference();
 
         if (ShouldRetreat())
         {
-            rb.linearVelocity = new Vector2(enemy.retreatVelocity.x * enemy.activeSlowMultiplier * -DirectionToPlayer(), enemy.retreatVelocity.y);
-            enemy.HandleFlip(DirectionToPlayer());
+            ShortRetreat();
         }
+    }
+
+    protected void ShortRetreat()
+    {
+        float x = (enemy.retreatVelocity.x * enemy.activeSlowMultiplier) * -DirectionToPlayer();
+        float y = enemy.retreatVelocity.y;
+
+        rb.linearVelocity = new Vector2(x, y);
+        enemy.HandleFlip(DirectionToPlayer());
     }
 
     public override void Update()
@@ -51,15 +59,16 @@ public class Enemy_BattleState : EnemyState
             enemy.SetVelocity(xVelocity * DirectionToPlayer(), rb.linearVelocity.y);
         }
     }
-    
+
     protected bool CanAttack() => Time.time > lastTimeAttacked + enemy.attackCooldown;
 
     protected void UpdateTargetIfNeeded()
     {
         if (enemy.PlayerDetected() == false)
             return;
-        
+
         Transform newTarget = enemy.PlayerDetected().transform;
+
         if (newTarget != lastTarget)
         {
             lastTarget = newTarget;
@@ -73,7 +82,7 @@ public class Enemy_BattleState : EnemyState
 
     protected bool WithinAttackRange() => DistanceToPlayer() < enemy.attackDistance;
 
-    private bool ShouldRetreat() => DistanceToPlayer() < enemy.minRetreatDistance;
+    protected bool ShouldRetreat() => DistanceToPlayer() < enemy.minRetreatDistance;
 
     protected float DistanceToPlayer()
     {

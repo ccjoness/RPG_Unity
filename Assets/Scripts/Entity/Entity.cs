@@ -9,13 +9,16 @@ public class Entity : MonoBehaviour
 
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
+    public Collider2D col { get; private set; }
     public Entity_SFX sfx { get; private set; }
     protected StateMachine stateMachine;
 
 
     private bool facingRight = true;
     public int facingDir { get; private set; } = 1;
-
+    
+    [SerializeField] protected bool showGizmos = false;
+    
     [Header("Collision detection")]
     public LayerMask whatIsGround;
     [SerializeField] private float groundCheckDistance;
@@ -36,6 +39,7 @@ public class Entity : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sfx = GetComponent<Entity_SFX>();
+        col = GetComponent<Collider2D>();
 
         stateMachine = new StateMachine();
     }
@@ -144,6 +148,9 @@ public class Entity : MonoBehaviour
     }
     protected virtual void OnDrawGizmos()
     {
+        if (showGizmos == false)
+            return;
+        
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + new Vector3(0, -groundCheckDistance));
         Gizmos.DrawLine(primaryWallCheck.position, primaryWallCheck.position + new Vector3(wallCheckDistance * facingDir, 0));
 
