@@ -23,6 +23,7 @@ public class Player_DashState : PlayerState
         rb.gravityScale = 0;
 
         player.health.SetCanTakeDamage(false);
+        player.gameObject.layer = LayerMask.NameToLayer("Untargetable");
     }
 
     public override void Update()
@@ -49,6 +50,7 @@ public class Player_DashState : PlayerState
         player.health.SetCanTakeDamage(true);
         player.SetVelocity(0, 0);
         rb.gravityScale = originalGravityScale;
+        player.gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
     private void CancelDashIfNeeded()

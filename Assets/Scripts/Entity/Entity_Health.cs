@@ -38,16 +38,14 @@ public class Entity_Health : MonoBehaviour, IDamageable
         entityStats = GetComponent<Entity_Stats>();
         healthBar = GetComponentInChildren<Slider>();
         dropManager = GetComponent<Entity_DropManager>();
-
-        SetupHealth();
     }
 
     protected virtual void Start()
     {
-
+        SetupHealth();
     }
 
-    private void SetupHealth()
+    public void SetupHealth()
     {
         if (entityStats == null)
             return;
