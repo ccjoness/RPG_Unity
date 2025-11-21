@@ -37,7 +37,7 @@ public class VFX_AutoController : MonoBehaviour
         if (canFade)
             StartCoroutine(FadeCo());
 
-        ApplyRansomOffset();
+        ApplyRandomOffset();
         ApplyRandomRotation();
 
         if (autoDestroy)
@@ -58,7 +58,7 @@ public class VFX_AutoController : MonoBehaviour
         sr.color = targetColor;
     }
 
-    private void ApplyRansomOffset()
+    private void ApplyRandomOffset()
     {
         if (randomOffset == false)
             return;

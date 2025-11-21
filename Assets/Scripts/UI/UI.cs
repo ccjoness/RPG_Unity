@@ -198,8 +198,6 @@ public class UI : MonoBehaviour
         questUI.gameObject.SetActive(true);
         questUI.SetupQuestUI(questsToShow);
     }
-    
-    public void CloseQuestUI() => questUI.gameObject.SetActive(false);
 
     public void OpenStorageUI(bool openStorageUI)
     {

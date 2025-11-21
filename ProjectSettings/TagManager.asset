@@ -22,7 +22,7 @@ TagManager:
   - SkillObjectSword
   - CounterableObjects
   - Untargetable
-  - 
+  - NotInteractable
   - 
   - 
   - 

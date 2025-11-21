@@ -3,9 +3,9 @@ using UnityEngine;
 public class Skill_Base : MonoBehaviour
 {
     public Player_SkillManager skillManager { get; private set; }
-    public Player player {get; private set;}
-    public DamageScaleData damageScaleData {get; private set;}
-    
+    public Player player { get; private set; }
+    public DamageScaleData damageScaleData { get; private set; }
+
     [Header("General Details")] 
     [SerializeField] protected SkillType skillType;
     [SerializeField] protected SkillUpgradeType upgradeType;
@@ -24,7 +24,7 @@ public class Skill_Base : MonoBehaviour
     {
 
     }
-    
+
     public void SetSkillUpgrade(Skill_DataSO skillData)
     {
         UpgradeData upgrade = skillData.upgradeData;
@@ -40,14 +40,14 @@ public class Skill_Base : MonoBehaviour
     {
         if (upgradeType == SkillUpgradeType.None)
             return false;
-        
+
         if (OnCooldown())
         {
             Debug.Log($"{upgradeType} - On Cooldown");
             return false;
         }
 
-        return true;
+        return true;    
     }
 
     protected bool Unlocked(SkillUpgradeType upgradeToCheck) => upgradeType == upgradeToCheck;

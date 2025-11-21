@@ -86,8 +86,7 @@ public class Enemy_Mage : Enemy, ICounterable
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
-        if (showGizmos == false)
-            return;
+
         Gizmos.DrawLine(behindCollsionCheck.position,
             new Vector3(behindCollsionCheck.position.x + (1.5f * -facingDir), behindCollsionCheck.position.y));
 

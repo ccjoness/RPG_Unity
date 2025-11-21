@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using UnityEngine;
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager instance;
-    
+
     private FileDataHandler dataHandler;
     private GameData gameData;
     private List<ISaveable> allSaveables;

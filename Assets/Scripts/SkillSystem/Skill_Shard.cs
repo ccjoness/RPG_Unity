@@ -6,7 +6,7 @@ public class Skill_Shard : Skill_Base
 {
     private SkillObject_Shard currentShard;
     private Entity_Health playerHealth;
-    
+
     [SerializeField] private GameObject shardPrefab;
     [SerializeField] private float detonationTime = 2;
     
@@ -33,7 +33,7 @@ public class Skill_Shard : Skill_Base
 
     public void CreateShard()
     {
-        float detonateTime = GetDetonationTime();
+        float detonationTime = GetDetonationTime();
 
         GameObject shard = Instantiate(shardPrefab, transform.position, Quaternion.identity);
         currentShard = shard.GetComponent<SkillObject_Shard>();

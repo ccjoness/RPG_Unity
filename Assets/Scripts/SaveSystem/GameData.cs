@@ -47,7 +47,7 @@ public class GameData
 
         unlockedCheckpoints = new SerializableDictionary<string, bool>();
         inScenePortals = new SerializableDictionary<string, Vector3>();
-        
+
         completedQuests = new SerializableDictionary<string, bool>();
         activeQuests = new SerializableDictionary<string, int>();
     }

@@ -43,7 +43,6 @@ public class FileDataHandler
         catch (Exception e)
         {
             Debug.LogError($"Error saving game data to file: {fullPath}\n{e}");
-            throw;
         }
     }
 
@@ -67,8 +66,11 @@ public class FileDataHandler
                         dataToLoad = reader.ReadToEnd();
                     }
                 }
+                
                 if (encryptData)
                     dataToLoad = EncryptDecryptData(dataToLoad);
+
+                // 4. Convert the JSON string back into a GameData object
                 loadData = JsonUtility.FromJson<GameData>(dataToLoad);
             }
 
@@ -87,7 +89,7 @@ public class FileDataHandler
             File.Delete(fullPath);
     }
 
-    public string EncryptDecryptData(string data)
+    private string EncryptDecryptData(string data)
     {
         string modifiedData = "";
 
