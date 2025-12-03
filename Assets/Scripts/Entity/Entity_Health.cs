@@ -67,7 +67,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
             // Debug.Log($"{gameObject.name} evaded the attack!");
             return false;
         }
-
+        
         Entity_Stats attackerStats = damageDealer.GetComponent<Entity_Stats>();
         float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;
         float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0;
